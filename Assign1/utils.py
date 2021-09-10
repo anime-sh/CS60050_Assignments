@@ -77,5 +77,20 @@ def train_val_test_split(X,y,train_size,val_size,shuffle=True,seed=42):
     y_test = y[test_indices]
     return X_train, X_val, X_test, y_train, y_val, y_test
 
+def check_purity(y):
+    """
+    Checks if the given array is pure.
+    :param y: the array
+    :return: True if the array is pure, False otherwise
+    """
+    return len(set(y)) == 1
 
-
+def classify_array(y):
+    """
+    Classifies the array into a single class.
+    find most common number and return that
+    :param y: the array
+    :return: the class
+    """
+    classes, counts = np.unique(y, return_counts=True)
+    return classes[counts.argmax()]
