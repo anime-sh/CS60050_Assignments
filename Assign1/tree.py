@@ -21,30 +21,13 @@ class Node:
         self.left=None
         self.right=None        
 
-    def reset_node(self,attribute,left, right):
-        '''
-            Resets the node
-        '''
-        self.attr=attribute
-        self.left=left
-        self.right=right
-    
-    def prune_node(self):
-        '''
-            Prunes the node
-        '''
-        self.attr= "Pruned"
-        self.left=None
-        self.right=None
 
-    def dfs_count(self):
-        '''
-            Counts the number of nodes in the tree
-        '''
-        count=1
-        if not self.left is None:
-            count+=self.left.dfs_count()
-        if not self.right is None:
-            count+=self.right.dfs_count()
-        return count
+class DecisionTree:
+    '''
+        Class defines the decision tree
+        self.root: [Node] root of the tree
+        self.X:  [Nest List] training features
+        self.y:  [List] training labels
+    '''
+    
 
