@@ -56,7 +56,9 @@ class Node:
                     return self.left.predict_node(X)
                 else:
                     return self.right.predict_node(X)
-
+    def __repr__(self) -> str:
+        
+        return f'Node(attr={self.attr_idx}, val={self.val}, type={self.attr_type}, leaf={self.leaf}, class={self.classification})'
 
 class DecisionTree:
     '''
@@ -84,14 +86,14 @@ class DecisionTree:
         '''
         self.root = self.build_tree(self.X, self.y)
 
-    def is_leaf(self, node):
+    def is_leaf(self, node,X_lo,y_lo):
         '''
             Checks if the node is a leaf
             node: [Node] node to be checked
         '''
-        if node.X_lo.shape[0] < self.min_leaf_size:
+        if X_lo.shape[0] <= self.min_leaf_size:
             return True
-        if utils.check_purity(node.y_lo):
+        if utils.check_purity(y_lo):
             return True
         return False
 
@@ -101,23 +103,27 @@ class DecisionTree:
             node: [Node] node to be built
             depth: [Int] depth of the node
         '''
+
         node = Node(0, 0, self.type_arr)
-        if self.is_leaf(node) or depth == self.max_depth:
+        if self.is_leaf(node,X,y) or depth == self.max_depth:
             node.make_leaf(utils.classify_array(y))
             return node
         else:
             depth += 1
-            best_attr, best_val = utils.get_best_attr(X, y, self.type_arr)
+            best_attr, best_val = utils.get_best_split(X, y, self.type_arr)
+            print(best_attr,best_val,self.type_arr[best_attr])
             node.attr_idx = best_attr
             node.val = best_val
             node.attr_type = self.type_arr[best_attr]
-            X_left, y_left, X_right, y_right = utils.split_data(
-                X, y, best_attr, best_val, self.type_arr[best_attr])
+            X_left, y_left, X_right, y_right = utils.create_children_np(X, y, best_attr, best_val, self.type_arr)
+            print(X_left.shape,y_left.shape,X_right.shape,y_right.shape)
             left_tree = self.build_tree(X_left, y_left, depth)
             right_tree = self.build_tree(X_right, y_right, depth)
-            if node.left == node.right:
+            if left_tree == right_tree:
+                # print(f"DEPTH = {depth} left is right")
                 node.make_leaf(utils.classify_array(y_left))
             else:
+                node.leaf=False
                 node.left = left_tree
                 node.right = right_tree
             return node
@@ -141,12 +147,13 @@ class DecisionTree:
         y_pred = self.predict(X)
         return utils.calc_accuracy(y, y_pred)
 
-    def print_tree(self, node, depth=0):
+    def print_tree(self, node=None, depth=0):
         '''
             Prints the tree in a readable format
             node: [Node] node to be printed
             depth: [Int] depth of the node
         '''
+        
         if node.leaf:
             print('|'*depth+'Leaf: '+str(node.classification))
         else:

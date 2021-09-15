@@ -114,7 +114,8 @@ def get_possible_breaks(X, type_arr):
     breaks = {}
     for col_idx in range(X.shape[1]):
         unique_vals = np.unique(X[:, col_idx])
-        num_vals = np.unique(X[:col_idx])
+        num_vals = np.unique(X[:,col_idx]).shape[0]
+
         type = type_arr[col_idx]
         if type == "cont":
             breaks[col_idx] = []
@@ -133,6 +134,8 @@ def create_children_np(X, y, col_idx, col_val, type_arr):
         Creates the children of a dataset given split column and value
     '''
     relevant_column = X[:, col_idx]
+    # print(relevant_column)
+    # print(relevant_column<=col_val)
     if type_arr[col_idx] == "cont":
         X_one = X[relevant_column <= col_val]
         Y_one = y[relevant_column <= col_val]
@@ -143,6 +146,7 @@ def create_children_np(X, y, col_idx, col_val, type_arr):
         Y_one = y[relevant_column == col_val]
         X_two = X[relevant_column != col_val]
         Y_two = y[relevant_column != col_val]
+    # print(X_one.shape, X_two.shape, Y_one.shape, Y_two.shape)
     return X_one, Y_one, X_two, Y_two
 
 
@@ -194,7 +198,7 @@ def get_best_split(X, y, type_arr, method="entropy"):
     '''
     best_col = -1
     best_val = -1
-    best_gain = 0
+    best_gain = -10000
     breaks = get_possible_breaks(X, type_arr)
     for col_idx in breaks:
         for col_val in breaks[col_idx]:
