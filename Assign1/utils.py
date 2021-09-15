@@ -163,7 +163,7 @@ def calc_entropy_np(y):
     """
     classes, counts = np.unique(y, return_counts=True)
     probabilities = counts / counts.sum()
-    return np.sum(probabilities * np.log2(probabilities))
+    return np.sum(probabilities * -np.log2(probabilities))
 
 
 def calc_info_gain(X, y, col_idx, col_val, type_arr):

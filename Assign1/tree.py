@@ -112,7 +112,7 @@ class DecisionTree:
         else:
             depth += 1
             best_attr, best_val = utils.get_best_split(
-                X, y, self.type_arr, method='gini')
+                X, y, self.type_arr)
             # print(best_attr,best_val,self.type_arr[best_attr])
             node.attr_idx = best_attr
             node.val = best_val

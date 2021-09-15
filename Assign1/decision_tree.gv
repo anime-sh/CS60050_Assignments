@@ -14,7 +14,7 @@ digraph "Decision Tree" {
 " -> "BMI <= 26.35)
 " [label=False]
 	"BMI <= 29.95)
-" -> "Glucose <= 146.5)
+" -> "Glucose <= 145.5)
 " [label=True]
 	"BMI <= 29.95)
 " -> "Glucose <= 165.5)
@@ -31,17 +31,17 @@ digraph "Decision Tree" {
 	"BMI <= 26.35)
 " -> "Glucose <= 94.5)
 " [label=False]
-	"Glucose <= 146.5)
-" -> "BloodPressure <= 55.0)
+	"Glucose <= 145.5)
+" -> "Pregnancies <= 2.5)
 " [label=True]
-	"Glucose <= 146.5)
+	"Glucose <= 145.5)
 " -> "Age <= 62.0)
 " [label=False]
 	"Glucose <= 165.5)
-" -> "Age <= 30.5)
+" -> "BloodPressure <= 91.0)
 " [label=True]
 	"Glucose <= 165.5)
-" -> "DiabetesPedigreeFunction <= 1.4275)
+" -> "Pregnancies <= 2.5)
 " [label=False]
 	"DiabetesPedigreeFunction <= 0.672)
 " -> 0
@@ -67,11 +67,11 @@ digraph "Decision Tree" {
 	"Glucose <= 94.5)
 " -> "DiabetesPedigreeFunction <= 0.5205)
 " [label=False]
-	"BloodPressure <= 55.0)
-" -> "Pregnancies <= 1.5)
-" [label=True]
-	"BloodPressure <= 55.0)
-" -> "Glucose <= 135.0)
+	"Pregnancies <= 2.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 2.5)
+" -> "Pregnancies <= 4.5)
 " [label=False]
 	"Age <= 62.0)
 " -> "Age <= 41.0)
@@ -79,17 +79,17 @@ digraph "Decision Tree" {
 	"Age <= 62.0)
 " -> 0
  [label=False]
-	"Age <= 30.5)
+	"BloodPressure <= 91.0)
 " -> "BloodPressure <= 61.0)
 " [label=True]
-	"Age <= 30.5)
-" -> "DiabetesPedigreeFunction <= 0.4295)
-" [label=False]
-	"DiabetesPedigreeFunction <= 1.4275)
-" -> "DiabetesPedigreeFunction <= 0.3065)
-" [label=True]
-	"DiabetesPedigreeFunction <= 1.4275)
-" -> "Pregnancies <= 3.5)
+	"BloodPressure <= 91.0)
+" -> 1
+ [label=False]
+	"Pregnancies <= 2.5)
+" -> 1
+ [label=True]
+	"Pregnancies <= 2.5)
+" -> "Glucose <= 178.5)
 " [label=False]
 	"DiabetesPedigreeFunction <= 0.6865)
 " -> 1
@@ -115,16 +115,10 @@ digraph "Decision Tree" {
 	"DiabetesPedigreeFunction <= 0.5205)
 " -> "Pregnancies <= 6.5)
 " [label=False]
-	"Pregnancies <= 1.5)
-" -> 0
- [label=True]
-	"Pregnancies <= 1.5)
-" -> 1
- [label=False]
-	"Glucose <= 135.0)
-" -> "Age <= 27.5)
+	"Pregnancies <= 4.5)
+" -> "Glucose <= 140.0)
 " [label=True]
-	"Glucose <= 135.0)
+	"Pregnancies <= 4.5)
 " -> 0
  [label=False]
 	"Age <= 41.0)
@@ -134,34 +128,22 @@ digraph "Decision Tree" {
 " -> "Pregnancies <= 9.5)
 " [label=False]
 	"BloodPressure <= 61.0)
-" -> 1
- [label=True]
+" -> "Age <= 40.0)
+" [label=True]
 	"BloodPressure <= 61.0)
-" -> "Insulin <= 252.5)
+" -> "Age <= 30.5)
 " [label=False]
-	"DiabetesPedigreeFunction <= 0.4295)
-" -> "Glucose <= 130.5)
-" [label=True]
-	"DiabetesPedigreeFunction <= 0.4295)
-" -> "Glucose <= 164.5)
-" [label=False]
-	"DiabetesPedigreeFunction <= 0.3065)
-" -> "DiabetesPedigreeFunction <= 0.2905)
-" [label=True]
-	"DiabetesPedigreeFunction <= 0.3065)
-" -> 1
- [label=False]
-	"Pregnancies <= 3.5)
+	"Glucose <= 178.5)
 " -> 1
  [label=True]
-	"Pregnancies <= 3.5)
-" -> 0
- [label=False]
+	"Glucose <= 178.5)
+" -> "DiabetesPedigreeFunction <= 1.3370000000000002)
+" [label=False]
 	"SkinThickness <= 8.5)
 " -> "Glucose <= 109.5)
 " [label=True]
 	"SkinThickness <= 8.5)
-" -> "BMI <= 31.1)
+" -> "BMI <= 31.8)
 " [label=False]
 	"DiabetesPedigreeFunction <= 0.544)
 " -> "Pregnancies <= 1.5)
@@ -187,12 +169,12 @@ digraph "Decision Tree" {
 	"Pregnancies <= 6.5)
 " -> 1
  [label=False]
-	"Age <= 27.5)
+	"Glucose <= 140.0)
+" -> "Glucose <= 133.0)
+" [label=True]
+	"Glucose <= 140.0)
 " -> 0
- [label=True]
-	"Age <= 27.5)
-" -> "Pregnancies <= 3.5)
-" [label=False]
+ [label=False]
 	"Glucose <= 163.0)
 " -> "Pregnancies <= 2.5)
 " [label=True]
@@ -205,28 +187,22 @@ digraph "Decision Tree" {
 	"Pregnancies <= 9.5)
 " -> "Glucose <= 161.5)
 " [label=False]
-	"Insulin <= 252.5)
-" -> "BloodPressure <= 85.0)
-" [label=True]
-	"Insulin <= 252.5)
-" -> 0
- [label=False]
-	"Glucose <= 130.5)
-" -> 0
+	"Age <= 40.0)
+" -> 1
  [label=True]
-	"Glucose <= 130.5)
-" -> "BMI <= 32.45)
+	"Age <= 40.0)
+" -> "Pregnancies <= 7.5)
 " [label=False]
-	"Glucose <= 164.5)
-" -> "Insulin <= 520.0)
+	"Age <= 30.5)
+" -> "Insulin <= 252.5)
 " [label=True]
-	"Glucose <= 164.5)
-" -> 0
- [label=False]
-	"DiabetesPedigreeFunction <= 0.2905)
-" -> "SkinThickness <= 27.5)
+	"Age <= 30.5)
+" -> "Age <= 33.5)
+" [label=False]
+	"DiabetesPedigreeFunction <= 1.3370000000000002)
+" -> "DiabetesPedigreeFunction <= 0.3135)
 " [label=True]
-	"DiabetesPedigreeFunction <= 0.2905)
+	"DiabetesPedigreeFunction <= 1.3370000000000002)
 " -> 0
  [label=False]
 	"Glucose <= 109.5)
@@ -235,12 +211,12 @@ digraph "Decision Tree" {
 	"Glucose <= 109.5)
 " -> "Glucose <= 123.0)
 " [label=False]
-	"BMI <= 31.1)
-" -> 1
- [label=True]
-	"BMI <= 31.1)
-" -> "BMI <= 31.8)
-" [label=False]
+	"BMI <= 31.8)
+" -> "Pregnancies <= 2.5)
+" [label=True]
+	"BMI <= 31.8)
+" -> 0
+ [label=False]
 	"Pregnancies <= 1.5)
 " -> "SkinThickness <= 36.0)
 " [label=True]
@@ -277,12 +253,12 @@ digraph "Decision Tree" {
 	"BloodPressure <= 87.0)
 " -> 0
  [label=False]
-	"Pregnancies <= 3.5)
-" -> "Glucose <= 128.5)
+	"Glucose <= 133.0)
+" -> "SkinThickness <= 17.5)
 " [label=True]
-	"Pregnancies <= 3.5)
-" -> "BMI <= 24.85)
-" [label=False]
+	"Glucose <= 133.0)
+" -> 1
+ [label=False]
 	"Pregnancies <= 2.5)
 " -> "Pregnancies <= 1.5)
 " [label=True]
@@ -301,28 +277,28 @@ digraph "Decision Tree" {
 	"Glucose <= 161.5)
 " -> 0
  [label=False]
-	"BloodPressure <= 85.0)
-" -> "Glucose <= 156.0)
-" [label=True]
-	"BloodPressure <= 85.0)
+	"Pregnancies <= 7.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 7.5)
 " -> 1
  [label=False]
-	"BMI <= 32.45)
-" -> "BMI <= 30.65)
+	"Insulin <= 252.5)
+" -> "Glucose <= 156.0)
 " [label=True]
-	"BMI <= 32.45)
-" -> "DiabetesPedigreeFunction <= 0.41100000000000003)
-" [label=False]
-	"Insulin <= 520.0)
-" -> "BMI <= 40.05)
-" [label=True]
-	"Insulin <= 520.0)
+	"Insulin <= 252.5)
 " -> 0
  [label=False]
-	"SkinThickness <= 27.5)
+	"Age <= 33.5)
+" -> 1
+ [label=True]
+	"Age <= 33.5)
+" -> "SkinThickness <= 45.0)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.3135)
 " -> "BMI <= 35.3)
 " [label=True]
-	"SkinThickness <= 27.5)
+	"DiabetesPedigreeFunction <= 0.3135)
 " -> 1
  [label=False]
 	"Glucose <= 123.0)
@@ -331,11 +307,11 @@ digraph "Decision Tree" {
 	"Glucose <= 123.0)
 " -> 0
  [label=False]
-	"BMI <= 31.8)
-" -> "Pregnancies <= 2.5)
-" [label=True]
-	"BMI <= 31.8)
+	"Pregnancies <= 2.5)
 " -> 0
+ [label=True]
+	"Pregnancies <= 2.5)
+" -> 1
  [label=False]
 	"SkinThickness <= 36.0)
 " -> 1
@@ -383,20 +359,14 @@ digraph "Decision Tree" {
 " -> "Insulin <= 137.5)
 " [label=True]
 	"BloodPressure <= 69.0)
-" -> "SkinThickness <= 47.5)
+" -> "Glucose <= 119.5)
 " [label=False]
-	"Glucose <= 128.5)
+	"SkinThickness <= 17.5)
 " -> 0
  [label=True]
-	"Glucose <= 128.5)
-" -> 1
- [label=False]
-	"BMI <= 24.85)
-" -> 1
- [label=True]
-	"BMI <= 24.85)
-" -> 0
- [label=False]
+	"SkinThickness <= 17.5)
+" -> "Pregnancies <= 3.5)
+" [label=False]
 	"Pregnancies <= 1.5)
 " -> 0
  [label=True]
@@ -404,39 +374,21 @@ digraph "Decision Tree" {
 " -> 1
  [label=False]
 	"Glucose <= 156.0)
-" -> "BloodPressure <= 73.0)
+" -> "BloodPressure <= 85.0)
 " [label=True]
 	"Glucose <= 156.0)
 " -> 1
  [label=False]
-	"BMI <= 30.65)
-" -> 1
- [label=True]
-	"BMI <= 30.65)
-" -> 0
- [label=False]
-	"DiabetesPedigreeFunction <= 0.41100000000000003)
-" -> "Pregnancies <= 4.5)
+	"SkinThickness <= 45.0)
+" -> "BloodPressure <= 75.0)
 " [label=True]
-	"DiabetesPedigreeFunction <= 0.41100000000000003)
-" -> 0
- [label=False]
-	"BMI <= 40.05)
-" -> 1
- [label=True]
-	"BMI <= 40.05)
-" -> "BloodPressure <= 80.0)
-" [label=False]
-	"BMI <= 35.3)
-" -> 0
- [label=True]
-	"BMI <= 35.3)
+	"SkinThickness <= 45.0)
 " -> 1
  [label=False]
-	"Pregnancies <= 2.5)
-" -> 0
- [label=True]
-	"Pregnancies <= 2.5)
+	"BMI <= 35.3)
+" -> "Glucose <= 192.0)
+" [label=True]
+	"BMI <= 35.3)
 " -> 1
  [label=False]
 	"SkinThickness <= 34.0)
@@ -452,7 +404,7 @@ digraph "Decision Tree" {
 " -> 1
  [label=False]
 	"Pregnancies <= 7.5)
-" -> "BloodPressure <= 55.0)
+" -> "BloodPressure <= 61.0)
 " [label=True]
 	"Pregnancies <= 7.5)
 " -> "Glucose <= 123.5)
@@ -481,29 +433,35 @@ digraph "Decision Tree" {
 	"Insulin <= 137.5)
 " -> 1
  [label=False]
-	"SkinThickness <= 47.5)
-" -> "Insulin <= 225.0)
-" [label=True]
-	"SkinThickness <= 47.5)
+	"Glucose <= 119.5)
+" -> 1
+ [label=True]
+	"Glucose <= 119.5)
+" -> "Glucose <= 124.0)
+" [label=False]
+	"Pregnancies <= 3.5)
+" -> 1
+ [label=True]
+	"Pregnancies <= 3.5)
 " -> 0
  [label=False]
-	"BloodPressure <= 73.0)
-" -> "DiabetesPedigreeFunction <= 0.3185)
+	"BloodPressure <= 85.0)
+" -> "BloodPressure <= 73.0)
 " [label=True]
-	"BloodPressure <= 73.0)
-" -> "Pregnancies <= 4.5)
-" [label=False]
-	"Pregnancies <= 4.5)
+	"BloodPressure <= 85.0)
 " -> 1
- [label=True]
-	"Pregnancies <= 4.5)
-" -> "Glucose <= 138.0)
+ [label=False]
+	"BloodPressure <= 75.0)
+" -> "Pregnancies <= 7.0)
+" [label=True]
+	"BloodPressure <= 75.0)
+" -> "Pregnancies <= 10.0)
 " [label=False]
-	"BloodPressure <= 80.0)
-" -> 1
- [label=True]
-	"BloodPressure <= 80.0)
+	"Glucose <= 192.0)
 " -> 0
+ [label=True]
+	"Glucose <= 192.0)
+" -> 1
  [label=False]
 	"Pregnancies <= 3.0)
 " -> 0
@@ -511,10 +469,10 @@ digraph "Decision Tree" {
 	"Pregnancies <= 3.0)
 " -> 1
  [label=False]
-	"BloodPressure <= 55.0)
+	"BloodPressure <= 61.0)
 " -> 0
  [label=True]
-	"BloodPressure <= 55.0)
+	"BloodPressure <= 61.0)
 " -> 1
  [label=False]
 	"Glucose <= 123.5)
@@ -535,28 +493,28 @@ digraph "Decision Tree" {
 	"Glucose <= 118.0)
 " -> 0
  [label=False]
-	"Insulin <= 225.0)
-" -> 1
- [label=True]
-	"Insulin <= 225.0)
-" -> 0
- [label=False]
-	"DiabetesPedigreeFunction <= 0.3185)
+	"Glucose <= 124.0)
 " -> 0
  [label=True]
-	"DiabetesPedigreeFunction <= 0.3185)
+	"Glucose <= 124.0)
 " -> 1
  [label=False]
-	"Pregnancies <= 4.5)
-" -> 0
+	"BloodPressure <= 73.0)
+" -> 1
  [label=True]
-	"Pregnancies <= 4.5)
+	"BloodPressure <= 73.0)
 " -> 0
  [label=False]
-	"Glucose <= 138.0)
+	"Pregnancies <= 7.0)
+" -> 0
+ [label=True]
+	"Pregnancies <= 7.0)
+" -> 1
+ [label=False]
+	"Pregnancies <= 10.0)
 " -> 1
  [label=True]
-	"Glucose <= 138.0)
-" -> 1
+	"Pregnancies <= 10.0)
+" -> 0
  [label=False]
 }
