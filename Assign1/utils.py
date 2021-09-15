@@ -2,9 +2,17 @@ import pandas as pd
 import numpy as np
 
 
-def get_x(path):
+def get_column_names(path):
+    '''
+        Gets the column names from the given path
+    '''
+    data = pd.read_csv(path)
+    return data.columns
+
+
+def get_X_y(path):
     """
-    Loads the x from the given path.
+    Loads the X and y from the given path.
     Assumes last columns of the x are the target values.
     :param path: the path to the x
     :return: the x as X and y numpy arrays
@@ -135,7 +143,7 @@ def create_children_np(X, y, col_idx, col_val, type_arr):
         Y_one = y[relevant_column == col_val]
         X_two = X[relevant_column != col_val]
         Y_two = y[relevant_column != col_val]
-    return X_one, Y_one,X_two, Y_two
+    return X_one, Y_one, X_two, Y_two
 
 
 def calc_entropy_np(y):
@@ -148,11 +156,13 @@ def calc_entropy_np(y):
     probabilities = counts / counts.sum()
     return np.sum(probabilities * np.log2(probabilities))
 
+
 def calc_info_gain(X, y, col_idx, col_val, type_arr):
     '''
         Calculates the information gain of a given split
     '''
-    X_one, Y_one, X_two, Y_two = create_children_np(X, y, col_idx, col_val, type_arr)
+    X_one, Y_one, X_two, Y_two = create_children_np(
+        X, y, col_idx, col_val, type_arr)
     p = len(X_one) / len(X)
     return calc_entropy_np(y) - (p * calc_entropy_np(Y_one) + (1 - p) * calc_entropy_np(Y_two))
 
@@ -167,11 +177,13 @@ def calc_gini_np(y):
     probabilities = counts / counts.sum()
     return 1 - np.sum(probabilities ** 2)
 
+
 def calc_gini_index(X, y, col_idx, col_val, type_arr):
     '''
         Calculates the gini index of a given split
     '''
-    X_one, Y_one, X_two, Y_two = create_children_np(X, y, col_idx, col_val, type_arr)
+    X_one, Y_one, X_two, Y_two = create_children_np(
+        X, y, col_idx, col_val, type_arr)
     p = len(X_one) / len(X)
     return calc_gini_np(y) - (p * calc_gini_np(Y_one) + (1 - p) * calc_gini_np(Y_two))
 
@@ -196,13 +208,14 @@ def get_best_split(X, y, type_arr, method="entropy"):
                 best_gain = gain
     return best_col, best_val
 
-def assign_feature_type(X,cont_thresh):
+
+def assign_feature_type(X, cont_thresh):
     '''
         Assigns the type of each feature based on the data
     '''
     type_arr = []
     for col_idx in range(X.shape[1]):
-        type_val=X[:,col_idx][0]
+        type_val = X[:, col_idx][0]
         unique_vals = np.unique(X[:, col_idx])
         if len(unique_vals) < cont_thresh or isinstance(type_val, str):
             type_arr.append("discrete")
@@ -210,7 +223,8 @@ def assign_feature_type(X,cont_thresh):
             type_arr.append("cont")
     return type_arr
 
-def calc_accuracy(y_pred, y_true):
+
+def calc_accuracy(y_true, y_pred):
     '''
         Calculates the accuracy of the prediction
     '''
