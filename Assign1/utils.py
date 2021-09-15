@@ -1,30 +1,31 @@
 import pandas as pd
 import numpy as np
 
-def get_data(path):
+
+def get_x(path):
     """
-    Loads the data from the given path.
-    Assumes last columns of the data are the target values.
-    :param path: the path to the data
-    :return: the data as X and y numpy arrays
+    Loads the x from the given path.
+    Assumes last columns of the x are the target values.
+    :param path: the path to the x
+    :return: the x as X and y numpy arrays
     """
-    data = pd.read_csv(path)
-    X = data.drop(data.columns[-1], axis=1).to_numpy()
-    y = data[data.columns[-1]].to_numpy()
+    x = pd.read_csv(path)
+    X = x.drop(x.columns[-1], axis=1).to_numpy()
+    y = x[x.columns[-1]].to_numpy()
     return X, y
 
-def train_test_split(X,y,train_size,shuffle=True,seed=42):
 
+def train_test_split(X, y, train_size, shuffle=True, seed=42):
     """
-    Splits the data into training and test sets.
-    :param X: the data
+    Splits the x into training and test sets.
+    :param X: the x
     :param y: the target values
     :param train_size: the size of the training set
-    :param shuffle: whether to shuffle the data
+    :param shuffle: whether to shuffle the x
     :param seed: the seed for the random generator
     :return: X_train, X_test, y_train, y_test
     """
-    length=len(X)
+    length = len(X)
     n_train = int(np.ceil(length*train_size))
     n_test = length - n_train
 
@@ -43,18 +44,18 @@ def train_test_split(X,y,train_size,shuffle=True,seed=42):
     return X_train, X_test, y_train, y_test
 
 
-def train_val_test_split(X,y,train_size,val_size,shuffle=True,seed=42):
+def train_val_test_split(X, y, train_size, val_size, shuffle=True, seed=42):
     '''
-    Splits the data into training, validation and test sets.
-    :param X: the data
+    Splits the x into training, validation and test sets.
+    :param X: the x
     :param y: the target values
     :param train_size: the size of the training set
     :param val_size: the size of the validation set
-    :param shuffle: whether to shuffle the data
+    :param shuffle: whether to shuffle the x
     :param seed: the seed for the random generator
     :return: X_train, X_val, X_test, y_train, y_val, y_test
     '''
-    length=len(X)
+    length = len(X)
     n_train = int(np.ceil(length*train_size))
     n_val = int(np.ceil(length*val_size))
     n_test = length - n_train - n_val
@@ -77,6 +78,7 @@ def train_val_test_split(X,y,train_size,val_size,shuffle=True,seed=42):
     y_test = y[test_indices]
     return X_train, X_val, X_test, y_train, y_val, y_test
 
+
 def check_purity(y):
     """
     Checks if the given array is pure.
@@ -84,6 +86,7 @@ def check_purity(y):
     :return: True if the array is pure, False otherwise
     """
     return len(set(y)) == 1
+
 
 def classify_array(y):
     """
@@ -94,3 +97,121 @@ def classify_array(y):
     """
     classes, counts = np.unique(y, return_counts=True)
     return classes[counts.argmax()]
+
+
+def get_possible_breaks(X, type_arr):
+    '''
+        Calculates possible breaks for a given set of features 
+    '''
+    breaks = {}
+    for col_idx in range(X.shape[1]):
+        unique_vals = np.unique(X[:, col_idx])
+        num_vals = np.unique(X[:col_idx])
+        type = type_arr[col_idx]
+        if type == "cont":
+            breaks[col_idx] = []
+            for i in range(1, num_vals):
+                current_value = unique_vals[i]
+                previous_value = unique_vals[i - 1]
+                potential_split = (current_value + previous_value) / 2
+                breaks[col_idx].append(potential_split)
+        elif num_vals > 1:
+            breaks[col_idx] = unique_vals
+    return breaks
+
+
+def create_children_np(X, y, col_idx, col_val, type_arr):
+    '''
+        Creates the children of a dataset given split column and value
+    '''
+    relevant_column = X[:, col_idx]
+    if type_arr[col_idx] == "cont":
+        X_one = X[relevant_column <= col_val]
+        Y_one = y[relevant_column <= col_val]
+        X_two = X[relevant_column > col_val]
+        Y_two = y[relevant_column > col_val]
+    else:
+        X_one = X[relevant_column == col_val]
+        Y_one = y[relevant_column == col_val]
+        X_two = X[relevant_column != col_val]
+        Y_two = y[relevant_column != col_val]
+    return X_one, Y_one,X_two, Y_two
+
+
+def calc_entropy_np(y):
+    """
+    Calculates the entropy of the given array.
+    :param y: the array
+    :return: the entropy
+    """
+    classes, counts = np.unique(y, return_counts=True)
+    probabilities = counts / counts.sum()
+    return np.sum(probabilities * np.log2(probabilities))
+
+def calc_info_gain(X, y, col_idx, col_val, type_arr):
+    '''
+        Calculates the information gain of a given split
+    '''
+    X_one, Y_one, X_two, Y_two = create_children_np(X, y, col_idx, col_val, type_arr)
+    p = len(X_one) / len(X)
+    return calc_entropy_np(y) - (p * calc_entropy_np(Y_one) + (1 - p) * calc_entropy_np(Y_two))
+
+
+def calc_gini_np(y):
+    """
+    Calculates the gini impurity of the given array.
+    :param y: the array
+    :return: the gini impurity
+    """
+    classes, counts = np.unique(y, return_counts=True)
+    probabilities = counts / counts.sum()
+    return 1 - np.sum(probabilities ** 2)
+
+def calc_gini_index(X, y, col_idx, col_val, type_arr):
+    '''
+        Calculates the gini index of a given split
+    '''
+    X_one, Y_one, X_two, Y_two = create_children_np(X, y, col_idx, col_val, type_arr)
+    p = len(X_one) / len(X)
+    return calc_gini_np(y) - (p * calc_gini_np(Y_one) + (1 - p) * calc_gini_np(Y_two))
+
+
+def get_best_split(X, y, type_arr, method="entropy"):
+    '''
+        Calculates the best split for a given set of features
+    '''
+    best_col = -1
+    best_val = -1
+    best_gain = 0
+    breaks = get_possible_breaks(X, type_arr)
+    for col_idx in breaks:
+        for col_val in breaks[col_idx]:
+            if method == "entropy":
+                gain = calc_info_gain(X, y, col_idx, col_val, type_arr)
+            else:
+                gain = calc_gini_index(X, y, col_idx, col_val, type_arr)
+            if gain > best_gain:
+                best_col = col_idx
+                best_val = col_val
+                best_gain = gain
+    return best_col, best_val
+
+def assign_feature_type(X,cont_thresh):
+    '''
+        Assigns the type of each feature based on the data
+    '''
+    type_arr = []
+    for col_idx in range(X.shape[1]):
+        type_val=X[:,col_idx][0]
+        unique_vals = np.unique(X[:, col_idx])
+        if len(unique_vals) < cont_thresh or isinstance(type_val, str):
+            type_arr.append("discrete")
+        else:
+            type_arr.append("cont")
+    return type_arr
+
+def calc_accuracy(y_pred, y_true):
+    '''
+        Calculates the accuracy of the prediction
+    '''
+    return np.sum(y_pred == y_true) / len(y_pred)
