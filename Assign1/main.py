@@ -9,7 +9,7 @@ DATA_PATH = None
 # if __name__ == 'main':
 parser = argparse.ArgumentParser()
 parser.add_argument("--max_depth", type=int, default=10)
-parser.add_argument("--min_leaf_size", type=int, default=2)
+parser.add_argument("--min_leaf_size", type=int, default=1)
 parser.add_argument("--data_path", type=str, default="diabetes.csv")
 
 args = parser.parse_args()
@@ -29,15 +29,14 @@ print("X_test:", X_test.shape)
 print("y_train:", y_train.shape)
 print("y_test:", y_test.shape)
 
-tree = tree.DecisionTree(
+Tree = tree.DecisionTree(
     X_train, y_train, feature_names, MIN_LEAF_SIZE, MAX_HEIGHT)
 
-tree.fit()
+Tree.fit()
 print("Training complete")
-print("Training accuracy:", tree.calc_accuracy(X_train, y_train))
-print("Testing accuracy:", tree.calc_accuracy(X_test, y_test))
+print("Training accuracy:", Tree.calc_accuracy(X_train, y_train))
+print("Testing accuracy:", Tree.calc_accuracy(X_test, y_test))
 
 print("Tree:\n\n\n")
-
-tree.print_tree(tree.root)
-
+# Tree.print_tree(Tree.root)
+tree.tree_to_gv(Tree.root, feature_names)

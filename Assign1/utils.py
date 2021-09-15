@@ -103,9 +103,9 @@ def classify_array(y):
     :param y: the array
     :return: the class
     """
-    classes, counts = np.unique(y, return_counts=True)
-    return classes[counts.argmax()]
-
+    # classes, counts = np.unique(y, return_counts=True)
+    # return classes[counts.argmax()]
+    return np.argmax(np.bincount(y.astype(int)))
 
 def get_possible_breaks(X, type_arr):
     '''
@@ -133,19 +133,24 @@ def create_children_np(X, y, col_idx, col_val, type_arr):
     '''
         Creates the children of a dataset given split column and value
     '''
-    relevant_column = X[:, col_idx]
+    y=y.reshape(-1, 1)
+    X_n=np.hstack((X,y))
+    relevant_column = X_n[:, col_idx]
     # print(relevant_column)
     # print(relevant_column<=col_val)
     if type_arr[col_idx] == "cont":
-        X_one = X[relevant_column <= col_val]
-        Y_one = y[relevant_column <= col_val]
-        X_two = X[relevant_column > col_val]
-        Y_two = y[relevant_column > col_val]
+        X_one = X_n[relevant_column <= col_val]
+        X_two = X_n[relevant_column > col_val]
     else:
-        X_one = X[relevant_column == col_val]
-        Y_one = y[relevant_column == col_val]
-        X_two = X[relevant_column != col_val]
-        Y_two = y[relevant_column != col_val]
+        X_one = X_n[relevant_column == col_val]
+        X_two = X_n[relevant_column != col_val]
+    
+    # print(X_one.shape, X_two.shape)
+    Y_one=X_one[:,-1]
+    Y_two=X_two[:,-1]
+    X_one=X_one[:,:-1]
+    X_two=X_two[:,:-1]
+    
     # print(X_one.shape, X_two.shape, Y_one.shape, Y_two.shape)
     return X_one, Y_one, X_two, Y_two
 

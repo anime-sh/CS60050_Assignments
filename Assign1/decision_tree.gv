@@ -1,0 +1,562 @@
+digraph "Decision Tree" {
+	rankdir=LR size="1000,500"
+	node [shape=rectangle]
+	"Glucose <= 127.5)
+" -> "Age <= 28.5)
+" [label=True]
+	"Glucose <= 127.5)
+" -> "BMI <= 29.95)
+" [label=False]
+	"Age <= 28.5)
+" -> "BMI <= 30.95)
+" [label=True]
+	"Age <= 28.5)
+" -> "BMI <= 26.35)
+" [label=False]
+	"BMI <= 29.95)
+" -> "Glucose <= 146.5)
+" [label=True]
+	"BMI <= 29.95)
+" -> "Glucose <= 165.5)
+" [label=False]
+	"BMI <= 30.95)
+" -> "DiabetesPedigreeFunction <= 0.672)
+" [label=True]
+	"BMI <= 30.95)
+" -> "BloodPressure <= 37.0)
+" [label=False]
+	"BMI <= 26.35)
+" -> "BMI <= 9.65)
+" [label=True]
+	"BMI <= 26.35)
+" -> "Glucose <= 94.5)
+" [label=False]
+	"Glucose <= 146.5)
+" -> "BloodPressure <= 55.0)
+" [label=True]
+	"Glucose <= 146.5)
+" -> "Age <= 62.0)
+" [label=False]
+	"Glucose <= 165.5)
+" -> "Age <= 30.5)
+" [label=True]
+	"Glucose <= 165.5)
+" -> "DiabetesPedigreeFunction <= 1.4275)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.672)
+" -> 0
+ [label=True]
+	"DiabetesPedigreeFunction <= 0.672)
+" -> "DiabetesPedigreeFunction <= 0.6865)
+" [label=False]
+	"BloodPressure <= 37.0)
+" -> 1
+ [label=True]
+	"BloodPressure <= 37.0)
+" -> "DiabetesPedigreeFunction <= 0.5005)
+" [label=False]
+	"BMI <= 9.65)
+" -> 1
+ [label=True]
+	"BMI <= 9.65)
+" -> 0
+ [label=False]
+	"Glucose <= 94.5)
+" -> "Glucose <= 28.5)
+" [label=True]
+	"Glucose <= 94.5)
+" -> "DiabetesPedigreeFunction <= 0.5205)
+" [label=False]
+	"BloodPressure <= 55.0)
+" -> "Pregnancies <= 1.5)
+" [label=True]
+	"BloodPressure <= 55.0)
+" -> "Glucose <= 135.0)
+" [label=False]
+	"Age <= 62.0)
+" -> "Age <= 41.0)
+" [label=True]
+	"Age <= 62.0)
+" -> 0
+ [label=False]
+	"Age <= 30.5)
+" -> "BloodPressure <= 61.0)
+" [label=True]
+	"Age <= 30.5)
+" -> "DiabetesPedigreeFunction <= 0.4295)
+" [label=False]
+	"DiabetesPedigreeFunction <= 1.4275)
+" -> "DiabetesPedigreeFunction <= 0.3065)
+" [label=True]
+	"DiabetesPedigreeFunction <= 1.4275)
+" -> "Pregnancies <= 3.5)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.6865)
+" -> 1
+ [label=True]
+	"DiabetesPedigreeFunction <= 0.6865)
+" -> 0
+ [label=False]
+	"DiabetesPedigreeFunction <= 0.5005)
+" -> "SkinThickness <= 8.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.5005)
+" -> "DiabetesPedigreeFunction <= 0.544)
+" [label=False]
+	"Glucose <= 28.5)
+" -> 1
+ [label=True]
+	"Glucose <= 28.5)
+" -> "Pregnancies <= 9.5)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.5205)
+" -> "SkinThickness <= 27.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.5205)
+" -> "Pregnancies <= 6.5)
+" [label=False]
+	"Pregnancies <= 1.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 1.5)
+" -> 1
+ [label=False]
+	"Glucose <= 135.0)
+" -> "Age <= 27.5)
+" [label=True]
+	"Glucose <= 135.0)
+" -> 0
+ [label=False]
+	"Age <= 41.0)
+" -> "Glucose <= 163.0)
+" [label=True]
+	"Age <= 41.0)
+" -> "Pregnancies <= 9.5)
+" [label=False]
+	"BloodPressure <= 61.0)
+" -> 1
+ [label=True]
+	"BloodPressure <= 61.0)
+" -> "Insulin <= 252.5)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.4295)
+" -> "Glucose <= 130.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.4295)
+" -> "Glucose <= 164.5)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.3065)
+" -> "DiabetesPedigreeFunction <= 0.2905)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.3065)
+" -> 1
+ [label=False]
+	"Pregnancies <= 3.5)
+" -> 1
+ [label=True]
+	"Pregnancies <= 3.5)
+" -> 0
+ [label=False]
+	"SkinThickness <= 8.5)
+" -> "Glucose <= 109.5)
+" [label=True]
+	"SkinThickness <= 8.5)
+" -> "BMI <= 31.1)
+" [label=False]
+	"DiabetesPedigreeFunction <= 0.544)
+" -> "Pregnancies <= 1.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.544)
+" -> "BloodPressure <= 67.0)
+" [label=False]
+	"Pregnancies <= 9.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 9.5)
+" -> "SkinThickness <= 27.0)
+" [label=False]
+	"SkinThickness <= 27.5)
+" -> "BloodPressure <= 83.0)
+" [label=True]
+	"SkinThickness <= 27.5)
+" -> "BloodPressure <= 89.0)
+" [label=False]
+	"Pregnancies <= 6.5)
+" -> "BloodPressure <= 87.0)
+" [label=True]
+	"Pregnancies <= 6.5)
+" -> 1
+ [label=False]
+	"Age <= 27.5)
+" -> 0
+ [label=True]
+	"Age <= 27.5)
+" -> "Pregnancies <= 3.5)
+" [label=False]
+	"Glucose <= 163.0)
+" -> "Pregnancies <= 2.5)
+" [label=True]
+	"Glucose <= 163.0)
+" -> "BloodPressure <= 60.0)
+" [label=False]
+	"Pregnancies <= 9.5)
+" -> 1
+ [label=True]
+	"Pregnancies <= 9.5)
+" -> "Glucose <= 161.5)
+" [label=False]
+	"Insulin <= 252.5)
+" -> "BloodPressure <= 85.0)
+" [label=True]
+	"Insulin <= 252.5)
+" -> 0
+ [label=False]
+	"Glucose <= 130.5)
+" -> 0
+ [label=True]
+	"Glucose <= 130.5)
+" -> "BMI <= 32.45)
+" [label=False]
+	"Glucose <= 164.5)
+" -> "Insulin <= 520.0)
+" [label=True]
+	"Glucose <= 164.5)
+" -> 0
+ [label=False]
+	"DiabetesPedigreeFunction <= 0.2905)
+" -> "SkinThickness <= 27.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.2905)
+" -> 0
+ [label=False]
+	"Glucose <= 109.5)
+" -> 0
+ [label=True]
+	"Glucose <= 109.5)
+" -> "Glucose <= 123.0)
+" [label=False]
+	"BMI <= 31.1)
+" -> 1
+ [label=True]
+	"BMI <= 31.1)
+" -> "BMI <= 31.8)
+" [label=False]
+	"Pregnancies <= 1.5)
+" -> "SkinThickness <= 36.0)
+" [label=True]
+	"Pregnancies <= 1.5)
+" -> 1
+ [label=False]
+	"BloodPressure <= 67.0)
+" -> "Glucose <= 89.0)
+" [label=True]
+	"BloodPressure <= 67.0)
+" -> "Age <= 21.5)
+" [label=False]
+	"SkinThickness <= 27.0)
+" -> 0
+ [label=True]
+	"SkinThickness <= 27.0)
+" -> "SkinThickness <= 36.0)
+" [label=False]
+	"BloodPressure <= 83.0)
+" -> "DiabetesPedigreeFunction <= 0.387)
+" [label=True]
+	"BloodPressure <= 83.0)
+" -> "SkinThickness <= 18.0)
+" [label=False]
+	"BloodPressure <= 89.0)
+" -> "BloodPressure <= 67.0)
+" [label=True]
+	"BloodPressure <= 89.0)
+" -> 1
+ [label=False]
+	"BloodPressure <= 87.0)
+" -> "BloodPressure <= 69.0)
+" [label=True]
+	"BloodPressure <= 87.0)
+" -> 0
+ [label=False]
+	"Pregnancies <= 3.5)
+" -> "Glucose <= 128.5)
+" [label=True]
+	"Pregnancies <= 3.5)
+" -> "BMI <= 24.85)
+" [label=False]
+	"Pregnancies <= 2.5)
+" -> "Pregnancies <= 1.5)
+" [label=True]
+	"Pregnancies <= 2.5)
+" -> 0
+ [label=False]
+	"BloodPressure <= 60.0)
+" -> 0
+ [label=True]
+	"BloodPressure <= 60.0)
+" -> 1
+ [label=False]
+	"Glucose <= 161.5)
+" -> 1
+ [label=True]
+	"Glucose <= 161.5)
+" -> 0
+ [label=False]
+	"BloodPressure <= 85.0)
+" -> "Glucose <= 156.0)
+" [label=True]
+	"BloodPressure <= 85.0)
+" -> 1
+ [label=False]
+	"BMI <= 32.45)
+" -> "BMI <= 30.65)
+" [label=True]
+	"BMI <= 32.45)
+" -> "DiabetesPedigreeFunction <= 0.41100000000000003)
+" [label=False]
+	"Insulin <= 520.0)
+" -> "BMI <= 40.05)
+" [label=True]
+	"Insulin <= 520.0)
+" -> 0
+ [label=False]
+	"SkinThickness <= 27.5)
+" -> "BMI <= 35.3)
+" [label=True]
+	"SkinThickness <= 27.5)
+" -> 1
+ [label=False]
+	"Glucose <= 123.0)
+" -> 1
+ [label=True]
+	"Glucose <= 123.0)
+" -> 0
+ [label=False]
+	"BMI <= 31.8)
+" -> "Pregnancies <= 2.5)
+" [label=True]
+	"BMI <= 31.8)
+" -> 0
+ [label=False]
+	"SkinThickness <= 36.0)
+" -> 1
+ [label=True]
+	"SkinThickness <= 36.0)
+" -> 0
+ [label=False]
+	"Glucose <= 89.0)
+" -> 0
+ [label=True]
+	"Glucose <= 89.0)
+" -> "SkinThickness <= 34.0)
+" [label=False]
+	"Age <= 21.5)
+" -> "Glucose <= 115.5)
+" [label=True]
+	"Age <= 21.5)
+" -> 0
+ [label=False]
+	"SkinThickness <= 36.0)
+" -> 1
+ [label=True]
+	"SkinThickness <= 36.0)
+" -> 0
+ [label=False]
+	"DiabetesPedigreeFunction <= 0.387)
+" -> "Pregnancies <= 7.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.387)
+" -> "Pregnancies <= 6.5)
+" [label=False]
+	"SkinThickness <= 18.0)
+" -> 0
+ [label=True]
+	"SkinThickness <= 18.0)
+" -> 1
+ [label=False]
+	"BloodPressure <= 67.0)
+" -> "Pregnancies <= 5.5)
+" [label=True]
+	"BloodPressure <= 67.0)
+" -> "Insulin <= 155.0)
+" [label=False]
+	"BloodPressure <= 69.0)
+" -> "Insulin <= 137.5)
+" [label=True]
+	"BloodPressure <= 69.0)
+" -> "SkinThickness <= 47.5)
+" [label=False]
+	"Glucose <= 128.5)
+" -> 0
+ [label=True]
+	"Glucose <= 128.5)
+" -> 1
+ [label=False]
+	"BMI <= 24.85)
+" -> 1
+ [label=True]
+	"BMI <= 24.85)
+" -> 0
+ [label=False]
+	"Pregnancies <= 1.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 1.5)
+" -> 1
+ [label=False]
+	"Glucose <= 156.0)
+" -> "BloodPressure <= 73.0)
+" [label=True]
+	"Glucose <= 156.0)
+" -> 1
+ [label=False]
+	"BMI <= 30.65)
+" -> 1
+ [label=True]
+	"BMI <= 30.65)
+" -> 0
+ [label=False]
+	"DiabetesPedigreeFunction <= 0.41100000000000003)
+" -> "Pregnancies <= 4.5)
+" [label=True]
+	"DiabetesPedigreeFunction <= 0.41100000000000003)
+" -> 0
+ [label=False]
+	"BMI <= 40.05)
+" -> 1
+ [label=True]
+	"BMI <= 40.05)
+" -> "BloodPressure <= 80.0)
+" [label=False]
+	"BMI <= 35.3)
+" -> 0
+ [label=True]
+	"BMI <= 35.3)
+" -> 1
+ [label=False]
+	"Pregnancies <= 2.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 2.5)
+" -> 1
+ [label=False]
+	"SkinThickness <= 34.0)
+" -> 1
+ [label=True]
+	"SkinThickness <= 34.0)
+" -> "Pregnancies <= 3.0)
+" [label=False]
+	"Glucose <= 115.5)
+" -> 0
+ [label=True]
+	"Glucose <= 115.5)
+" -> 1
+ [label=False]
+	"Pregnancies <= 7.5)
+" -> "BloodPressure <= 55.0)
+" [label=True]
+	"Pregnancies <= 7.5)
+" -> "Glucose <= 123.5)
+" [label=False]
+	"Pregnancies <= 6.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 6.5)
+" -> 1
+ [label=False]
+	"Pregnancies <= 5.5)
+" -> "Pregnancies <= 0.5)
+" [label=True]
+	"Pregnancies <= 5.5)
+" -> 1
+ [label=False]
+	"Insulin <= 155.0)
+" -> 0
+ [label=True]
+	"Insulin <= 155.0)
+" -> "Glucose <= 118.0)
+" [label=False]
+	"Insulin <= 137.5)
+" -> 0
+ [label=True]
+	"Insulin <= 137.5)
+" -> 1
+ [label=False]
+	"SkinThickness <= 47.5)
+" -> "Insulin <= 225.0)
+" [label=True]
+	"SkinThickness <= 47.5)
+" -> 0
+ [label=False]
+	"BloodPressure <= 73.0)
+" -> "DiabetesPedigreeFunction <= 0.3185)
+" [label=True]
+	"BloodPressure <= 73.0)
+" -> "Pregnancies <= 4.5)
+" [label=False]
+	"Pregnancies <= 4.5)
+" -> 1
+ [label=True]
+	"Pregnancies <= 4.5)
+" -> "Glucose <= 138.0)
+" [label=False]
+	"BloodPressure <= 80.0)
+" -> 1
+ [label=True]
+	"BloodPressure <= 80.0)
+" -> 0
+ [label=False]
+	"Pregnancies <= 3.0)
+" -> 0
+ [label=True]
+	"Pregnancies <= 3.0)
+" -> 1
+ [label=False]
+	"BloodPressure <= 55.0)
+" -> 0
+ [label=True]
+	"BloodPressure <= 55.0)
+" -> 1
+ [label=False]
+	"Glucose <= 123.5)
+" -> 0
+ [label=True]
+	"Glucose <= 123.5)
+" -> 1
+ [label=False]
+	"Pregnancies <= 0.5)
+" -> 1
+ [label=True]
+	"Pregnancies <= 0.5)
+" -> 0
+ [label=False]
+	"Glucose <= 118.0)
+" -> 1
+ [label=True]
+	"Glucose <= 118.0)
+" -> 0
+ [label=False]
+	"Insulin <= 225.0)
+" -> 1
+ [label=True]
+	"Insulin <= 225.0)
+" -> 0
+ [label=False]
+	"DiabetesPedigreeFunction <= 0.3185)
+" -> 0
+ [label=True]
+	"DiabetesPedigreeFunction <= 0.3185)
+" -> 1
+ [label=False]
+	"Pregnancies <= 4.5)
+" -> 0
+ [label=True]
+	"Pregnancies <= 4.5)
+" -> 0
+ [label=False]
+	"Glucose <= 138.0)
+" -> 1
+ [label=True]
+	"Glucose <= 138.0)
+" -> 1
+ [label=False]
+}
