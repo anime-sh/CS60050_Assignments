@@ -58,7 +58,22 @@ class Node:
                     return self.left.predict_node(X)
                 else:
                     return self.right.predict_node(X)
+    
+    def __eq__(self, other) -> bool:
 
+        if self.leaf==True and other.leaf==True:
+            return self.classification==other.classification
+        if self.attr_idx!=other.attr_idx:
+            return False
+        if self.val!=other.val:
+            return False
+        if self.attr_type!=other.attr_type:
+            return False
+        if self.left!=other.left:
+            return False
+        if self.right!=other.right:
+            return False
+        return True
 
 class DecisionTree:
     '''
@@ -122,6 +137,7 @@ class DecisionTree:
             # print(X_left.shape,y_left.shape,X_right.shape,y_right.shape)
             left_tree = self.build_tree(X_left, y_left, depth)
             right_tree = self.build_tree(X_right, y_right, depth)
+            # print(type(left_tree),type(right_tree))
             if left_tree == right_tree:
                 # print(f"DEPTH = {depth} left is right")
                 node.make_leaf(utils.classify_array(y_left))
@@ -136,7 +152,7 @@ class DecisionTree:
             Predicts the labels of the test data
             X: [Nest List] test features
         '''
-        if self.root == None:
+        if self.root is None:
             return None
         else:
             return np.array([self.root.predict_node(x) for x in X])
@@ -148,6 +164,8 @@ class DecisionTree:
             y: [List] test labels
         '''
         y_pred = self.predict(X)
+        from sklearn.metrics import classification_report 
+        print(classification_report(y, y_pred))
         return utils.calc_accuracy(y, y_pred)
 
     def print_tree(self, node=None, depth=0):
@@ -180,18 +198,17 @@ def tree_to_gv(node_root, feature_names):
     f.attr(rankdir='LR', size='1000,500')
     f.attr('node', shape='rectangle')
     q = [node_root]
+    
     while len(q) > 0:
         node = q.pop(0)
-        if node.left != None:
+        if not node.left is None:
             f.edge(render_node(node, feature_names), render_node(
                 node.left, feature_names), label='True')
-        if node.right != None:
+            # co+=1
+            q.append(node.left)
+        if not node.right is None:
             f.edge(render_node(node, feature_names), render_node(
                 node.right, feature_names), label='False')
-
-        if node.left != None:
-            q.append(node.left)
-        if node.right != None:
+            # co+=1
             q.append(node.right)
-
     f.render('./decision_tree.gv', view=True)
