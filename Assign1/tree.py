@@ -187,28 +187,29 @@ class DecisionTree:
             self.print_tree(node.right, depth+1)
 
 
-def render_node(vertex, feature_names):
+def render_node(vertex, feature_names,count):
     if vertex.leaf:
-        return f'{vertex.classification}\n'
+        return f'ID {count},\nClassification -> {vertex.classification}\n'
     return f'{feature_names[vertex.attr_idx]} <= {vertex.val})\n'
 
 
 def tree_to_gv(node_root, feature_names):
     f = Digraph('Decision Tree', filename='decision_tree.gv')
-    f.attr(rankdir='LR', size='1000,500')
+    # f.attr(rankdir='LR', size='1000,500')
+    
     f.attr('node', shape='rectangle')
     q = [node_root]
-    
+    idx=0
     while len(q) > 0:
         node = q.pop(0)
         if not node.left is None:
-            f.edge(render_node(node, feature_names), render_node(
-                node.left, feature_names), label='True')
-            # co+=1
+            f.edge(render_node(node, feature_names,idx), render_node(
+                node.left, feature_names,idx), label='True')
+            idx+=1
             q.append(node.left)
         if not node.right is None:
-            f.edge(render_node(node, feature_names), render_node(
-                node.right, feature_names), label='False')
-            # co+=1
+            f.edge(render_node(node, feature_names,idx), render_node(
+                node.right, feature_names,idx), label='False')
+            idx+=1
             q.append(node.right)
     f.render('./decision_tree.gv', view=True)
