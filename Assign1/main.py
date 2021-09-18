@@ -23,11 +23,14 @@ if (MAX_HEIGHT < 0):
 
 feature_names = utils.get_column_names(DATA_PATH)
 X_full, y_full = utils.get_X_y(DATA_PATH)
-X_train, X_test, y_train, y_test = utils.train_test_split(X_full, y_full,0.8)
+# X_train, X_test, y_train, y_test = utils.train_test_split(X_full, y_full,0.8)
+X_train,X_val,X_test,y_train,y_val,y_test = utils.train_val_test_split(X_full,y_full,0.6,0.2)
 print("X_train:", X_train.shape)
 print("X_test:", X_test.shape)
 print("y_train:", y_train.shape)
 print("y_test:", y_test.shape)
+print("X_val:", X_val.shape)
+print("y_val:", y_val.shape)
 
 Tree = tree.DecisionTree(
     X_train, y_train, feature_names, MIN_LEAF_SIZE, MAX_HEIGHT)
@@ -36,7 +39,14 @@ Tree.fit()
 print("Training complete")
 print("Training accuracy:", Tree.calc_accuracy(X_train, y_train))
 print("Testing accuracy:", Tree.calc_accuracy(X_test, y_test))
-
+print("Validation accuracy:", Tree.calc_accuracy(X_val, y_val))
 print("Tree:\n\n\n")
 # Tree.print_tree(Tree.root)
 tree.tree_to_gv(Tree.root, feature_names)
+
+Tree.post_prune(X_train,y_train,X_val,y_val)
+print("Post Pruning complete")
+print("Training accuracy:", Tree.calc_pruned_accuracy(X_train, y_train))
+print("Testing accuracy:", Tree.calc_pruned_accuracy(X_test, y_test))
+print("Validation accuracy:", Tree.calc_pruned_accuracy(X_val, y_val))
+tree.tree_to_gv(Tree.root_pruned, feature_names,"prunedDT.gv")

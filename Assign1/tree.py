@@ -33,6 +33,8 @@ class Node:
         '''
         # print(f'Making leaf node {classification}')
         self.leaf = True
+        self.left = None
+        self.right = None
         self.classification = classification
 
     def get_classification(self):
@@ -58,22 +60,73 @@ class Node:
                     return self.left.predict_node(X)
                 else:
                     return self.right.predict_node(X)
-    
+
     def __eq__(self, other) -> bool:
 
-        if self.leaf==True and other.leaf==True:
-            return self.classification==other.classification
-        if self.attr_idx!=other.attr_idx:
+        if self.leaf == True and other.leaf == True:
+            return self.classification == other.classification
+        if self.attr_idx != other.attr_idx:
             return False
-        if self.val!=other.val:
+        if self.val != other.val:
             return False
-        if self.attr_type!=other.attr_type:
+        if self.attr_type != other.attr_type:
             return False
-        if self.left!=other.left:
+        if self.left != other.left:
             return False
-        if self.right!=other.right:
+        if self.right != other.right:
             return False
         return True
+
+    def dfs_count(self):
+        ans = 1
+        if self.left != None:
+            ans += self.left.dfs_count()
+        if self.right != None:
+            ans += self.right.dfs_count()
+        return ans
+
+    def calc_prune_error(self, X_val, y_val):
+        preds = np.array([self.predict_node(x) for x in X_val])
+        return np.sum(preds != y_val)
+
+    def prune_base(self, y_train, X_val, y_val, n_node):
+
+        leaf = utils.classify_array(y_train)
+        errors_leaf = np.sum(y_val != leaf)
+        errors_node = np.sum(y_val != np.array(
+            [self.predict_node(x) for x in X_val]))
+
+        if errors_leaf <= errors_node:
+            n_node.make_leaf(leaf)
+        
+
+    def prune_rec(self, X_train, y_train, X_val, y_val,type_arr):
+
+        n_node = Node(self.attr_idx, self.val, type_arr)
+        n_node.leaf = self.leaf
+        n_node.classification = self.classification
+        n_node.left = self.left
+        n_node.right = self.right
+        # print(f"start {type(n_node)}")
+        if self.leaf:
+            n_node = self.prune_base(y_train, X_val, y_val, n_node)
+
+        else:
+            X_train_yes, Y_train_yes, X_train_no, Y_train_no = utils.filter(
+                X_train, y_train, self.attr_idx, self.val,type_arr)
+            X_val_yes, Y_val_yes, X_val_no, Y_val_no = utils.filter(
+                X_val, y_val, self.attr_idx, self.val,type_arr)
+
+            if not (self.left is None or self.left.leaf==True):
+                n_node.left = self.left.prune_rec(X_train_yes,Y_train_yes, X_val_yes, Y_val_yes,type_arr)
+            if not (self.right is None or self.right.leaf==True):
+                n_node.right = self.right.prune_rec(X_train_no,Y_train_no, X_val_no, Y_val_no,type_arr)
+
+            self.prune_base(y_train, X_val, y_val, n_node)
+
+        # print(f"end {type(n_node)}")
+        return n_node
+
 
 class DecisionTree:
     '''
@@ -88,6 +141,7 @@ class DecisionTree:
             Initializes the tree
         '''
         self.root = None
+        self.root_pruned = None
         self.X = X
         self.y = y
         self.min_leaf_size = min_leaf_size
@@ -157,6 +211,12 @@ class DecisionTree:
         else:
             return np.array([self.root.predict_node(x) for x in X])
 
+    def pruned_predict(self, X):
+        if self.root_pruned is None:
+            return None
+        else:
+            return np.array([self.root_pruned.predict_node(x) for x in X])
+
     def calc_accuracy(self, X, y):
         '''
             Calculates the accuracy of the decision tree
@@ -164,7 +224,13 @@ class DecisionTree:
             y: [List] test labels
         '''
         y_pred = self.predict(X)
-        from sklearn.metrics import classification_report 
+        from sklearn.metrics import classification_report
+        print(classification_report(y, y_pred))
+        return utils.calc_accuracy(y, y_pred)
+
+    def calc_pruned_accuracy(self, X, y):
+        y_pred = self.pruned_predict(X)
+        from sklearn.metrics import classification_report
         print(classification_report(y, y_pred))
         return utils.calc_accuracy(y, y_pred)
 
@@ -186,30 +252,39 @@ class DecisionTree:
             self.print_tree(node.left, depth+1)
             self.print_tree(node.right, depth+1)
 
+    def count_nodes(self):
+        return self.root.dfs_count()
 
-def render_node(vertex, feature_names,count):
+    def post_prune(self, X_train, y_train, X_val, y_val):
+        '''
+            Recursively prunes the tree
+        '''
+        self.root_pruned = self.root.prune_rec(X_train, y_train, X_val, y_val,self.type_arr)
+
+
+def render_node(vertex, feature_names, count):
     if vertex.leaf:
         return f'ID {count},\nClassification -> {vertex.classification}\n'
     return f'{feature_names[vertex.attr_idx]} <= {vertex.val})\n'
 
 
-def tree_to_gv(node_root, feature_names):
-    f = Digraph('Decision Tree', filename='decision_tree.gv')
+def tree_to_gv(node_root, feature_names,file_name="decision_tree.gv"):
+    f = Digraph('Decision Tree', filename=file_name)
     # f.attr(rankdir='LR', size='1000,500')
-    
+
     f.attr('node', shape='rectangle')
     q = [node_root]
-    idx=0
+    idx = 0
     while len(q) > 0:
         node = q.pop(0)
         if not node.left is None:
-            f.edge(render_node(node, feature_names,idx), render_node(
-                node.left, feature_names,idx), label='True')
-            idx+=1
+            f.edge(render_node(node, feature_names, idx), render_node(
+                node.left, feature_names, idx), label='True')
+            idx += 1
             q.append(node.left)
         if not node.right is None:
-            f.edge(render_node(node, feature_names,idx), render_node(
-                node.right, feature_names,idx), label='False')
-            idx+=1
+            f.edge(render_node(node, feature_names, idx), render_node(
+                node.right, feature_names, idx), label='False')
+            idx += 1
             q.append(node.right)
-    f.render('./decision_tree.gv', view=True)
+    f.render(f'./{file_name}', view=True)

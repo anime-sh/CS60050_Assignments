@@ -103,9 +103,10 @@ def classify_array(y):
     :param y: the array
     :return: the class
     """
-    # classes, counts = np.unique(y, return_counts=True)
-    # return classes[counts.argmax()]
-    return np.argmax(np.bincount(y.astype(int)))
+    classes, counts = np.unique(y, return_counts=True)
+    return classes[counts.argmax()]
+    # return np.argmax(np.bincount(y.astype(int)))
+
 
 def get_possible_breaks(X, type_arr):
     '''
@@ -114,7 +115,7 @@ def get_possible_breaks(X, type_arr):
     breaks = {}
     for col_idx in range(X.shape[1]):
         unique_vals = np.unique(X[:, col_idx])
-        num_vals = np.unique(X[:,col_idx]).shape[0]
+        num_vals = np.unique(X[:, col_idx]).shape[0]
 
         type = type_arr[col_idx]
         if type == "cont":
@@ -133,8 +134,8 @@ def create_children_np(X, y, col_idx, col_val, type_arr):
     '''
         Creates the children of a dataset given split column and value
     '''
-    y=y.reshape(-1, 1)
-    X_n=np.hstack((X,y))
+    y = y.reshape(-1, 1)
+    X_n = np.hstack((X, y))
     relevant_column = X_n[:, col_idx]
     # print(relevant_column)
     # print(relevant_column<=col_val)
@@ -144,13 +145,13 @@ def create_children_np(X, y, col_idx, col_val, type_arr):
     else:
         X_one = X_n[relevant_column == col_val]
         X_two = X_n[relevant_column != col_val]
-    
+
     # print(X_one.shape, X_two.shape)
-    Y_one=X_one[:,-1]
-    Y_two=X_two[:,-1]
-    X_one=X_one[:,:-1]
-    X_two=X_two[:,:-1]
-    
+    Y_one = X_one[:, -1]
+    Y_two = X_two[:, -1]
+    X_one = X_one[:, :-1]
+    X_two = X_two[:, :-1]
+
     # print(X_one.shape, X_two.shape, Y_one.shape, Y_two.shape)
     return X_one, Y_one, X_two, Y_two
 
@@ -238,3 +239,28 @@ def calc_accuracy(y_true, y_pred):
         Calculates the accuracy of the prediction
     '''
     return np.sum(y_pred == y_true) / len(y_pred)
+
+
+def filter(X, y, col_idx, col_val, type_arr):
+
+    y = y.reshape(-1, 1)
+    X_n = np.hstack((X, y))
+    relevant_column = X_n[:, col_idx]
+
+    if type_arr[col_idx] == "cont":
+        X_yes = X_n[relevant_column <= col_val]
+        X_no = X_n[relevant_column > col_val]
+
+    else:
+        X_yes = X_n[relevant_column == col_val]
+        X_no = X_n[relevant_column != col_val]
+
+    Y_yes = X_yes[:, -1]
+    Y_no = X_no[:, -1]
+    X_yes = X_yes[:, :-1]
+    X_no = X_no[:, :-1]
+    return X_yes, Y_yes, X_no, Y_no
+
+def check_node(X,y):
+    return classify_array(y)
+
