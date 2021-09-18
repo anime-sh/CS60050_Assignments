@@ -2,7 +2,7 @@ import numpy as np
 import utils
 from graphviz import Digraph
 
-
+GLOBAL_COUNT=0
 class Node:
     '''
         Class defines the nodes of the decision tree
@@ -19,6 +19,10 @@ class Node:
         '''
             Initializes the node
         '''
+        global GLOBAL_COUNT
+        GLOBAL_COUNT+=1
+        self.node_id=GLOBAL_COUNT
+        
         self.attr_idx = attribute
         self.val = value
         self.attr_type = type_arr[self.attr_idx]
@@ -62,8 +66,10 @@ class Node:
                     return self.right.predict_node(X)
 
     def __eq__(self, other) -> bool:
-
-        if self.leaf == True and other.leaf == True:
+        # print(self,other)
+        if other is None:
+            return True
+        if self.leaf and other.leaf:
             return self.classification == other.classification
         if self.attr_idx != other.attr_idx:
             return False
@@ -79,9 +85,9 @@ class Node:
 
     def dfs_count(self):
         ans = 1
-        if self.left != None:
+        if not self.left is None:
             ans += self.left.dfs_count()
-        if self.right != None:
+        if not self.right is None:
             ans += self.right.dfs_count()
         return ans
 
@@ -154,6 +160,8 @@ class DecisionTree:
         '''
                 Builds the decision tree
         '''
+        # global GLOBAL_COUNT
+        GLOBAL_COUNT=0
         self.root = self.build_tree(self.X, self.y)
 
     def is_leaf(self, X_lo, y_lo):
@@ -174,29 +182,35 @@ class DecisionTree:
             depth: [Int] depth of the node
         '''
 
-        node = Node(0, 0, self.type_arr)
+        
         if self.is_leaf(X, y) or depth == self.max_depth:
-            # print(np.unique(y,return_counts=True))
+            node = Node(0, 0, self.type_arr)
             node.make_leaf(utils.classify_array(y))
             return node
         else:
             depth += 1
             best_attr, best_val = utils.get_best_split(
                 X, y, self.type_arr,self.measure)
+            node = Node(best_attr, best_val, self.type_arr)
             
-            node.attr_idx = best_attr
-            node.val = best_val
-            node.attr_type = self.type_arr[best_attr]
             X_left, y_left, X_right, y_right = utils.create_children_np(
                 X, y, best_attr, best_val, self.type_arr)
+            
+            if X_left.shape[0] == 0 or X_right.shape[0] == 0:
+                node.make_leaf(utils.classify_array(y))    
+                return node
+
             left_tree = self.build_tree(X_left, y_left, depth)
             right_tree = self.build_tree(X_right, y_right, depth)
-            if left_tree == right_tree:
+            
+            # print("hii",left_tree,right_tree)
+            if left_tree == right_tree:    
                 node.make_leaf(utils.classify_array(y_left))
             else:
                 node.leaf = False
                 node.left = left_tree
                 node.right = right_tree
+
             return node
 
     def predict(self, X):
@@ -215,7 +229,7 @@ class DecisionTree:
         else:
             return np.array([self.root_pruned.predict_node(x) for x in X])
 
-    def calc_accuracy(self, X, y):
+    def calc_accuracy(self, X, y,print_report=True):
         '''
             Calculates the accuracy of the decision tree
             X: [Nest List] test features
@@ -223,13 +237,15 @@ class DecisionTree:
         '''
         y_pred = self.predict(X)
         from sklearn.metrics import classification_report
-        print(classification_report(y, y_pred))
+        if print_report:
+            print(classification_report(y, y_pred))
         return utils.calc_accuracy(y, y_pred)
 
-    def calc_pruned_accuracy(self, X, y):
+    def calc_pruned_accuracy(self, X, y,print_report=True):
         y_pred = self.pruned_predict(X)
         from sklearn.metrics import classification_report
-        print(classification_report(y, y_pred))
+        if print_report:
+            print(classification_report(y, y_pred))
         return utils.calc_accuracy(y, y_pred)
 
     def print_tree(self, node=None, depth=0):
@@ -262,8 +278,8 @@ class DecisionTree:
 
 def render_node(vertex, feature_names, count):
     if vertex.leaf:
-        return f'ID {count},\nClassification -> {vertex.classification}\n'
-    return f'{feature_names[vertex.attr_idx]} <= {vertex.val})\n'
+        return f'ID {vertex.node_id},\nClassification -> {vertex.classification}\n'
+    return f'ID {vertex.node_id}{feature_names[vertex.attr_idx]} <= {vertex.val}\n'
 
 
 def tree_to_gv(node_root, feature_names,file_name="decision_tree.gv"):
