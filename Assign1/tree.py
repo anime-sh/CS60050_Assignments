@@ -160,7 +160,7 @@ class DecisionTree:
         '''
                 Builds the decision tree
         '''
-        # global GLOBAL_COUNT
+        global GLOBAL_COUNT
         GLOBAL_COUNT=0
         self.root = self.build_tree(self.X, self.y)
 
@@ -273,6 +273,8 @@ class DecisionTree:
         '''
             Recursively prunes the tree
         '''
+        global GLOBAL_COUNT
+        GLOBAL_COUNT=0
         self.root_pruned = self.root.prune_rec(X_train, y_train, X_val, y_val,self.type_arr)
 
 

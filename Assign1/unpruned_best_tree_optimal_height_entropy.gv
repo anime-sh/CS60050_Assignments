@@ -1,23 +1,23 @@
 digraph "Decision Tree" {
 	node [shape=rectangle]
-	"ID 4582
+	"ID 1
 Glucose <= 120.5
-" -> "ID 4583,
+" -> "ID 2,
 Classification -> 0.0
 " [label=True]
-	"ID 4582
+	"ID 1
 Glucose <= 120.5
-" -> "ID 4586
+" -> "ID 5
 Glucose <= 165.5
 " [label=False]
-	"ID 4586
+	"ID 5
 Glucose <= 165.5
-" -> "ID 4587,
+" -> "ID 6,
 Classification -> 0.0
 " [label=True]
-	"ID 4586
+	"ID 5
 Glucose <= 165.5
-" -> "ID 4588,
+" -> "ID 7,
 Classification -> 1.0
 " [label=False]
 }

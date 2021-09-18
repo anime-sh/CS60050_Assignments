@@ -1,53 +1,53 @@
 digraph "Decision Tree" {
 	node [shape=rectangle]
-	"ID 4589
+	"ID 1
 Glucose <= 120.5
-" -> "ID 4590
+" -> "ID 2
 BMI <= 26.45
 " [label=True]
-	"ID 4589
+	"ID 1
 Glucose <= 120.5
-" -> "ID 4613,
+" -> "ID 25,
 Classification -> 1.0
 " [label=False]
-	"ID 4590
+	"ID 2
 BMI <= 26.45
-" -> "ID 4591,
+" -> "ID 3,
 Classification -> 0.0
 " [label=True]
-	"ID 4590
+	"ID 2
 BMI <= 26.45
-" -> "ID 4593
+" -> "ID 5
 Pregnancies <= 6.5
 " [label=False]
-	"ID 4593
+	"ID 5
 Pregnancies <= 6.5
-" -> "ID 4594,
+" -> "ID 6,
 Classification -> 0.0
 " [label=True]
-	"ID 4593
+	"ID 5
 Pregnancies <= 6.5
-" -> "ID 4607
+" -> "ID 19
 Glucose <= 94.0
 " [label=False]
-	"ID 4607
+	"ID 19
 Glucose <= 94.0
-" -> "ID 4608
+" -> "ID 20
 BMI <= 29.9
 " [label=True]
-	"ID 4607
+	"ID 19
 Glucose <= 94.0
-" -> "ID 4609,
+" -> "ID 21,
 Classification -> 1.0
 " [label=False]
-	"ID 4608
+	"ID 20
 BMI <= 29.9
-" -> "ID 1682,
+" -> "ID 40,
 Classification -> 1.0
 " [label=True]
-	"ID 4608
+	"ID 20
 BMI <= 29.9
-" -> "ID 1683,
+" -> "ID 41,
 Classification -> 0.0
 " [label=False]
 }
