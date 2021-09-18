@@ -1,179 +1,18 @@
 digraph "Decision Tree" {
 	node [shape=rectangle]
-	"Glucose <= 154.5)
-" -> "Age <= 28.5)
-" [label=True]
-	"Glucose <= 154.5)
-" -> "ID 1,
-Classification -> 1.0
-" [label=False]
-	"Age <= 28.5)
-" -> "Glucose <= 127.5)
-" [label=True]
-	"Age <= 28.5)
-" -> "BMI <= 26.35)
-" [label=False]
 	"Glucose <= 127.5)
-" -> "BMI <= 31.4)
+" -> "ID 0,
+Classification -> 0.0
 " [label=True]
 	"Glucose <= 127.5)
-" -> "BloodPressure <= 59.0)
+" -> "BMI <= 29.95)
 " [label=False]
-	"BMI <= 26.35)
-" -> "ID 6,
+	"BMI <= 29.95)
+" -> "ID 2,
 Classification -> 0.0
 " [label=True]
-	"BMI <= 26.35)
-" -> "Glucose <= 99.5)
-" [label=False]
-	"BMI <= 31.4)
-" -> "ID 8,
-Classification -> 0.0
-" [label=True]
-	"BMI <= 31.4)
-" -> "Insulin <= 9.0)
-" [label=False]
-	"BloodPressure <= 59.0)
-" -> "ID 10,
-Classification -> 1.0
-" [label=True]
-	"BloodPressure <= 59.0)
-" -> "BMI <= 30.3)
-" [label=False]
-	"Glucose <= 99.5)
-" -> "ID 12,
-Classification -> 0.0
-" [label=True]
-	"Glucose <= 99.5)
-" -> "DiabetesPedigreeFunction <= 0.528)
-" [label=False]
-	"Insulin <= 9.0)
-" -> "Glucose <= 111.5)
-" [label=True]
-	"Insulin <= 9.0)
-" -> "DiabetesPedigreeFunction <= 0.4895)
-" [label=False]
-	"BMI <= 30.3)
-" -> "ID 16,
-Classification -> 0.0
-" [label=True]
-	"BMI <= 30.3)
-" -> "BMI <= 32.0)
-" [label=False]
-	"DiabetesPedigreeFunction <= 0.528)
-" -> "Age <= 56.5)
-" [label=True]
-	"DiabetesPedigreeFunction <= 0.528)
-" -> "ID 19,
-Classification -> 1.0
-" [label=False]
-	"Glucose <= 111.5)
-" -> "ID 20,
-Classification -> 0.0
-" [label=True]
-	"Glucose <= 111.5)
-" -> "ID 21,
-Classification -> 1.0
-" [label=False]
-	"DiabetesPedigreeFunction <= 0.4895)
-" -> "ID 22,
-Classification -> 0.0
-" [label=True]
-	"DiabetesPedigreeFunction <= 0.4895)
-" -> "BloodPressure <= 65.0)
-" [label=False]
-	"BMI <= 32.0)
-" -> "ID 24,
-Classification -> 1.0
-" [label=True]
-	"BMI <= 32.0)
-" -> "BloodPressure <= 85.0)
-" [label=False]
-	"Age <= 56.5)
-" -> "DiabetesPedigreeFunction <= 0.442)
-" [label=True]
-	"Age <= 56.5)
-" -> "ID 27,
-Classification -> 0.0
-" [label=False]
-	"BloodPressure <= 65.0)
-" -> "Pregnancies <= 0.5)
-" [label=True]
-	"BloodPressure <= 65.0)
-" -> "ID 29,
-Classification -> 0.0
-" [label=False]
-	"BloodPressure <= 85.0)
-" -> "BloodPressure <= 73.0)
-" [label=True]
-	"BloodPressure <= 85.0)
-" -> "ID 31,
-Classification -> 1.0
-" [label=False]
-	"DiabetesPedigreeFunction <= 0.442)
-" -> "BloodPressure <= 67.0)
-" [label=True]
-	"DiabetesPedigreeFunction <= 0.442)
-" -> "ID 33,
-Classification -> 0.0
-" [label=False]
-	"Pregnancies <= 0.5)
-" -> "ID 34,
-Classification -> 0.0
-" [label=True]
-	"Pregnancies <= 0.5)
-" -> "BloodPressure <= 61.0)
-" [label=False]
-	"BloodPressure <= 73.0)
-" -> "Pregnancies <= 3.5)
-" [label=True]
-	"BloodPressure <= 73.0)
-" -> "ID 37,
-Classification -> 0.0
-" [label=False]
-	"BloodPressure <= 67.0)
-" -> "BloodPressure <= 59.0)
-" [label=True]
-	"BloodPressure <= 67.0)
-" -> "Insulin <= 109.0)
-" [label=False]
-	"BloodPressure <= 61.0)
-" -> "ID 40,
-Classification -> 0.0
-" [label=True]
-	"BloodPressure <= 61.0)
-" -> "ID 41,
-Classification -> 1.0
-" [label=False]
-	"Pregnancies <= 3.5)
-" -> "ID 42,
-Classification -> 1.0
-" [label=True]
-	"Pregnancies <= 3.5)
-" -> "ID 43,
-Classification -> 0.0
-" [label=False]
-	"BloodPressure <= 59.0)
-" -> "ID 44,
-Classification -> 0.0
-" [label=True]
-	"BloodPressure <= 59.0)
-" -> "ID 45,
-Classification -> 1.0
-" [label=False]
-	"Insulin <= 109.0)
-" -> "ID 46,
-Classification -> 0.0
-" [label=True]
-	"Insulin <= 109.0)
-" -> "Age <= 40.5)
-" [label=False]
-	"Age <= 40.5)
-" -> "ID 48,
-Classification -> 0.0
-" [label=True]
-	"Age <= 40.5)
-" -> "ID 49,
+	"BMI <= 29.95)
+" -> "ID 3,
 Classification -> 1.0
 " [label=False]
 }

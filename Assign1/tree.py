@@ -136,10 +136,11 @@ class DecisionTree:
         self.y:  [List] training labels
     '''
 
-    def __init__(self, X, y, column_names, min_leaf_size, max_depth):
+    def __init__(self, X, y, column_names, min_leaf_size, max_depth,impurity_measure):
         '''
             Initializes the tree
         '''
+        self.measure=impurity_measure
         self.root = None
         self.root_pruned = None
         self.X = X
@@ -181,19 +182,16 @@ class DecisionTree:
         else:
             depth += 1
             best_attr, best_val = utils.get_best_split(
-                X, y, self.type_arr)
-            # print(best_attr,best_val,self.type_arr[best_attr])
+                X, y, self.type_arr,self.measure)
+            
             node.attr_idx = best_attr
             node.val = best_val
             node.attr_type = self.type_arr[best_attr]
             X_left, y_left, X_right, y_right = utils.create_children_np(
                 X, y, best_attr, best_val, self.type_arr)
-            # print(X_left.shape,y_left.shape,X_right.shape,y_right.shape)
             left_tree = self.build_tree(X_left, y_left, depth)
             right_tree = self.build_tree(X_right, y_right, depth)
-            # print(type(left_tree),type(right_tree))
             if left_tree == right_tree:
-                # print(f"DEPTH = {depth} left is right")
                 node.make_leaf(utils.classify_array(y_left))
             else:
                 node.leaf = False
