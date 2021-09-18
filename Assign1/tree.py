@@ -68,7 +68,7 @@ class Node:
     def __eq__(self, other) -> bool:
         # print(self,other)
         if other is None:
-            return True
+            return False
         if self.leaf and other.leaf:
             return self.classification == other.classification
         if self.attr_idx != other.attr_idx:
@@ -279,7 +279,7 @@ class DecisionTree:
 def render_node(vertex, feature_names, count):
     if vertex.leaf:
         return f'ID {vertex.node_id},\nClassification -> {vertex.classification}\n'
-    return f'ID {vertex.node_id}{feature_names[vertex.attr_idx]} <= {vertex.val}\n'
+    return f'ID {vertex.node_id}\n{feature_names[vertex.attr_idx]} <= {vertex.val}\n'
 
 
 def tree_to_gv(node_root, feature_names,file_name="decision_tree.gv"):
@@ -291,6 +291,8 @@ def tree_to_gv(node_root, feature_names,file_name="decision_tree.gv"):
     idx = 0
     while len(q) > 0:
         node = q.pop(0)
+        if node is None:
+            continue
         if not node.left is None:
             f.edge(render_node(node, feature_names, idx), render_node(
                 node.left, feature_names, idx), label='True')
