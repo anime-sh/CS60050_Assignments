@@ -4,7 +4,7 @@
 2. Nisarg Upadhyaya - 19CS30031
 
 ## Instructions to Run
-1. Install all dependencies
+1. Install all dependencies (given below)
 2. Run `python main.py`
 
 ## External Packages Used
