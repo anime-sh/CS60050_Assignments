@@ -1,0 +1,63 @@
+digraph "Decision Tree" {
+	node [shape=rectangle]
+	"ID 1
+Glucose <= 127.5
+" -> "ID 2
+Age <= 28.5
+" [label=True]
+	"ID 1
+Glucose <= 127.5
+" -> "ID 9
+Glucose <= 165.5
+" [label=False]
+	"ID 2
+Age <= 28.5
+" -> "ID 3
+BMI <= 45.4
+" [label=True]
+	"ID 2
+Age <= 28.5
+" -> "ID 6,
+Classification -> 0.0
+" [label=False]
+	"ID 9
+Glucose <= 165.5
+" -> "ID 10
+BMI <= 30.200000000000003
+" [label=True]
+	"ID 9
+Glucose <= 165.5
+" -> "ID 13
+BMI <= 23.1
+" [label=False]
+	"ID 3
+BMI <= 45.4
+" -> "ID 4,
+Classification -> 0.0
+" [label=True]
+	"ID 3
+BMI <= 45.4
+" -> "ID 5,
+Classification -> 1.0
+" [label=False]
+	"ID 10
+BMI <= 30.200000000000003
+" -> "ID 11,
+Classification -> 0.0
+" [label=True]
+	"ID 10
+BMI <= 30.200000000000003
+" -> "ID 12,
+Classification -> 1.0
+" [label=False]
+	"ID 13
+BMI <= 23.1
+" -> "ID 14,
+Classification -> 0.0
+" [label=True]
+	"ID 13
+BMI <= 23.1
+" -> "ID 15,
+Classification -> 1.0
+" [label=False]
+}

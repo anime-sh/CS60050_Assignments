@@ -1,53 +1,73 @@
 digraph "Decision Tree" {
 	node [shape=rectangle]
 	"ID 1
-Glucose <= 120.5
+Glucose <= 127.5
 " -> "ID 2
-BMI <= 26.45
+BMI <= 26.4
 " [label=True]
 	"ID 1
-Glucose <= 120.5
-" -> "ID 25,
-Classification -> 1.0
+Glucose <= 127.5
+" -> "ID 25
+BMI <= 30.25
 " [label=False]
 	"ID 2
-BMI <= 26.45
+BMI <= 26.4
 " -> "ID 3,
 Classification -> 0.0
 " [label=True]
 	"ID 2
-BMI <= 26.45
+BMI <= 26.4
 " -> "ID 5
-Pregnancies <= 6.5
+Age <= 27.5
+" [label=False]
+	"ID 25
+BMI <= 30.25
+" -> "ID 26,
+Classification -> 0.0
+" [label=True]
+	"ID 25
+BMI <= 30.25
+" -> "ID 36,
+Classification -> 1.0
 " [label=False]
 	"ID 5
-Pregnancies <= 6.5
+Age <= 27.5
 " -> "ID 6,
 Classification -> 0.0
 " [label=True]
 	"ID 5
-Pregnancies <= 6.5
-" -> "ID 19
-Glucose <= 94.0
+Age <= 27.5
+" -> "ID 11
+Glucose <= 99.5
 " [label=False]
-	"ID 19
-Glucose <= 94.0
-" -> "ID 20
-BMI <= 29.9
-" [label=True]
-	"ID 19
-Glucose <= 94.0
-" -> "ID 21,
-Classification -> 1.0
-" [label=False]
-	"ID 20
-BMI <= 29.9
-" -> "ID 40,
-Classification -> 1.0
-" [label=True]
-	"ID 20
-BMI <= 29.9
-" -> "ID 41,
+	"ID 11
+Glucose <= 99.5
+" -> "ID 12,
 Classification -> 0.0
+" [label=True]
+	"ID 11
+Glucose <= 99.5
+" -> "ID 16
+BloodPressure <= 85.0
+" [label=False]
+	"ID 16
+BloodPressure <= 85.0
+" -> "ID 17,
+Classification -> 1.0
+" [label=True]
+	"ID 16
+BloodPressure <= 85.0
+" -> "ID 22
+BMI <= 42.400000000000006
+" [label=False]
+	"ID 22
+BMI <= 42.400000000000006
+" -> "ID 23,
+Classification -> 0.0
+" [label=True]
+	"ID 22
+BMI <= 42.400000000000006
+" -> "ID 24,
+Classification -> 1.0
 " [label=False]
 }

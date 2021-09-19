@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split as tts
 
 
 def get_column_names(path):
@@ -33,22 +34,24 @@ def train_test_split(X, y, train_size, shuffle=True, seed=42):
     :param seed: the seed for the random generator
     :return: X_train, X_test, y_train, y_test
     """
-    length = len(X)
-    n_train = int(np.ceil(length*train_size))
-    n_test = length - n_train
+    # length = len(X)
+    # n_train = int(np.ceil(length*train_size))
+    # n_test = length - n_train
 
-    if shuffle:
-        perm = np.random.RandomState(seed).permutation(length)
-        test_indices = perm[:n_test]
-        train_indices = perm[n_test:]
-    else:
-        train_indices = np.arange(n_train)
-        test_indices = np.arange(n_train, length)
+    # if shuffle:
+    #     perm = np.random.RandomState(seed).permutation(length)
+    #     test_indices = perm[:n_test]
+    #     train_indices = perm[n_test:]
+    # else:
+    #     train_indices = np.arange(n_train)
+    #     test_indices = np.arange(n_train, length)
 
-    X_train = X[train_indices]
-    X_test = X[test_indices]
-    y_train = y[train_indices]
-    y_test = y[test_indices]
+    # X_train = X[train_indices]
+    # X_test = X[test_indices]
+    # y_train = y[train_indices]
+    # y_test = y[test_indices]
+    X_train, X_test, y_train, y_test = tts(
+        X, y, stratify=y, test_size=1-train_size, random_state=seed)
     return X_train, X_test, y_train, y_test
 
 
@@ -63,27 +66,34 @@ def train_val_test_split(X, y, train_size, val_size, shuffle=True, seed=42):
     :param seed: the seed for the random generator
     :return: X_train, X_val, X_test, y_train, y_val, y_test
     '''
-    length = len(X)
-    n_train = int(np.ceil(length*train_size))
-    n_val = int(np.ceil(length*val_size))
-    n_test = length - n_train - n_val
+    # length = len(X)
+    # n_train = int(np.ceil(length*train_size))
+    # n_val = int(np.ceil(length*val_size))
+    # n_test = length - n_train - n_val
 
-    if shuffle:
-        perm = np.random.RandomState(seed).permutation(length)
-        test_indices = perm[:n_test]
-        val_indices = perm[n_test:n_test+n_val]
-        train_indices = perm[n_test+n_val:]
-    else:
-        train_indices = np.arange(n_train)
-        val_indices = np.arange(n_train, n_train + n_val)
-        test_indices = np.arange(n_train + n_val, length)
+    # if shuffle:
+    #     perm = np.random.RandomState(seed).permutation(length)
+    #     test_indices = perm[:n_test]
+    #     val_indices = perm[n_test:n_test+n_val]
+    #     train_indices = perm[n_test+n_val:]
+    # else:
+    #     train_indices = np.arange(n_train)
+    #     val_indices = np.arange(n_train, n_train + n_val)
+    #     test_indices = np.arange(n_train + n_val, length)
 
-    X_train = X[train_indices]
-    X_val = X[val_indices]
-    X_test = X[test_indices]
-    y_train = y[train_indices]
-    y_val = y[val_indices]
-    y_test = y[test_indices]
+    # X_train = X[train_indices]
+    # X_val = X[val_indices]
+    # X_test = X[test_indices]
+    # y_train = y[train_indices]
+    # y_val = y[val_indices]
+    # y_test = y[test_indices]
+
+    test_size = 1-train_size-val_size
+    X_train, X_temp, y_train, y_temp = tts(
+        X, y, stratify=y, test_size=(1.0 - train_size), random_state=seed)
+    relative_test_size = test_size / (val_size + test_size)
+    X_val, X_test, y_val, y_test = tts(
+        X_temp, y_temp, stratify=y_temp, test_size=relative_test_size, random_state=seed)
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 
@@ -261,6 +271,6 @@ def filter(X, y, col_idx, col_val, type_arr):
     X_no = X_no[:, :-1]
     return X_yes, Y_yes, X_no, Y_no
 
-def check_node(X,y):
-    return classify_array(y)
 
+def check_node(X, y):
+    return classify_array(y)

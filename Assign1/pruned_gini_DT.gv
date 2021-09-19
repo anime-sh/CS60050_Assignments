@@ -1,0 +1,13 @@
+digraph "Decision Tree" {
+	node [shape=rectangle]
+	"ID 1
+Glucose <= 127.5
+" -> "ID 2,
+Classification -> 0.0
+" [label=True]
+	"ID 1
+Glucose <= 127.5
+" -> "ID 25,
+Classification -> 1.0
+" [label=False]
+}
