@@ -71,7 +71,7 @@ def height_ablation(X_train, y_train,X_test,y_test ,X_val, y_val, measure):
     axis[0].set_ylabel("Accuracy")
     axis[0].set_title("Accuracy vs Max Depth")
     axis[0].legend()
-    
+
     axis[1].plot(num_node_list, train_acc_depth_list, label="Train")
     axis[1].plot(num_node_list, val_acc_depth_list, label="Validation")
     axis[1].plot(num_node_list, test_acc_depth_list, label="Test")
@@ -187,7 +187,7 @@ def run_gini_exp(X_full,y_full,X_train_,y_train_,X_test_,y_test_):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--max_depth", type=int, default=8)
+    parser.add_argument("--max_depth", type=int, default=10)
     parser.add_argument("--min_leaf_size", type=int, default=1)
     parser.add_argument("--impurity_measure", type=str, default="entropy")
     parser.add_argument("--random_seed", type=int, default="42")
