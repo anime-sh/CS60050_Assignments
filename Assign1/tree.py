@@ -154,7 +154,7 @@ class DecisionTree:
         self.min_leaf_size = min_leaf_size
         self.max_depth = max_depth
         self.column_names = column_names
-        self.type_arr = utils.assign_feature_type(X, 4)
+        self.type_arr = utils.assign_feature_type(X, 2)
 
     def fit(self):
         '''
