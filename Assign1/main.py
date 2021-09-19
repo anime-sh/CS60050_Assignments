@@ -22,6 +22,8 @@ def select_best_tree(X_full, y_full, measure):
     y_b_test = None
     y_b_val = None
     best_acc = -1
+    acc_list=[]
+    acc_train_list=[]
     for i in range(1, 11):
         X_train, X_val, X_test, y_train, y_val, y_test = utils.train_val_test_split(
             X_full, y_full, 0.6, 0.2, seed=i+RANDOM_SEED)
@@ -33,6 +35,8 @@ def select_best_tree(X_full, y_full, measure):
         print(f"Training on split {i} complete")
         print(f"Training accuracy: {train_acc}")
         print(f"Testing accuracy: {test_acc}")
+        acc_list.append(test_acc)
+        acc_train_list.append(train_acc)
         if test_acc > best_acc:
             best_acc = test_acc
             X_b_train = X_train
@@ -44,6 +48,9 @@ def select_best_tree(X_full, y_full, measure):
             best_tree=copy.deepcopy(Tree)
     # best_tree=tree.DecisionTree(X_b_train, y_b_train, feature_names, MIN_LEAF_SIZE, MAX_HEIGHT, measure)
     # best_tree.fit()
+    print("\n\n")
+    print(f"Average train accuracy over 10 test train splits is {np.mean(acc_train_list)}")
+    print(f"Average test acuracy over 10 test train splits is {np.mean(acc_list)}")
     return best_tree, X_b_train, X_b_test, X_b_val, y_b_train, y_b_test, y_b_val
 
 
