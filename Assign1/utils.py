@@ -198,7 +198,7 @@ def calc_gini_np(y):
     return 1 - np.sum(probabilities ** 2)
 
 
-def calc_gini_index(X, y, col_idx, col_val, type_arr):
+def calc_gini_gain(X, y, col_idx, col_val, type_arr):
     '''
         Calculates the gini index of a given split
     '''
@@ -221,7 +221,7 @@ def get_best_split(X, y, type_arr, method="entropy"):
             if method == "entropy":
                 gain = calc_info_gain(X, y, col_idx, col_val, type_arr)
             else:
-                gain = calc_gini_index(X, y, col_idx, col_val, type_arr)
+                gain = calc_gini_gain(X, y, col_idx, col_val, type_arr)
             if gain > best_gain:
                 best_col = col_idx
                 best_val = col_val
