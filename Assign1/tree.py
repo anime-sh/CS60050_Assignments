@@ -49,7 +49,7 @@ class Node:
 
     def predict_node(self, X):
         '''
-            Predicts the class of the node
+            Predicts the class of the instance X
         '''
         if self.leaf:
             return self.classification
