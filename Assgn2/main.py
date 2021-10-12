@@ -6,10 +6,10 @@ from scipy import sparse as sp
 import numpy as np
 df=pd.read_csv("train.csv")
 vec=CountVectorizer(stop_words='english',binary=True)  # IMPLEMENT THIS KHUDSE
-M=vec.fit_transform(df['text'].to_numpy()).toarray()
+M=vec.fit_transform(df['text'].to_numpy())
+M=M.toarray()
 from sklearn import preprocessing
 le = preprocessing.LabelEncoder()
-print(np.unique(M))
 le.fit(df.author)
 print(le.classes_)
 df.author=le.transform(df.author)
@@ -35,19 +35,20 @@ def likelihood_calc(X_n, col_num, val, label):
     p_x_conditioned_y = len(X_n[X_n[:,col_num]==val]) / len(X_n)
     return p_x_conditioned_y
 
-def naive_bayes(X_train,y_train, X_test):
+def naive_bayes(X_train,y_train, X_test,alpha=1):
     y_train = y_train.reshape(-1, 1)
     X_n = np.hstack((X_train, y_train))
     print(X_n.shape)
     print(X_test.shape)
-    prior = np.log(prior_calc())
+    p_y = prior_calc()
+    prior=[np.log(lo+alpha) for lo in p_y]
     Y_pred = []
     lookup_table_likelihood=np.zeros((X_test.shape[1],len(le.classes_),2))
 
     for i in tqdm(range(X_train.shape[1])):
         for j in range(len(le.classes_)):
-            lookup_table_likelihood[i][j][1] = np.log(likelihood_calc(X_n, i,1,j))
-            lookup_table_likelihood[i][j][0] = np.log(likelihood_calc(X_n, i,0,j))
+            lookup_table_likelihood[i][j][1] = np.log(likelihood_calc(X_n, i,1,j)+alpha)
+            lookup_table_likelihood[i][j][0] = np.log(likelihood_calc(X_n, i,0,j)+alpha)
     
     for x in tqdm(X_test):
         likelihood = [0]*len(le.classes_)

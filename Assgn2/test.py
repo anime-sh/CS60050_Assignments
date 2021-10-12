@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
 df=pd.read_csv("train.csv")
-vec=CountVectorizer(stop_words='english') 
+vec=CountVectorizer(stop_words='english',binary=True) 
 M=vec.fit_transform(df['text'].to_numpy())
 from sklearn import preprocessing
 le = preprocessing.LabelEncoder()
