@@ -8,17 +8,17 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
 df=pd.read_csv("train.csv")
-vec=CountVectorizer(stop_words='english')  # IMPLEMENT THIS KHUDSE
-M=vec.fit_transform(df['text'].to_numpy()).toarray()
+vec=CountVectorizer(stop_words='english') 
+M=vec.fit_transform(df['text'].to_numpy())
 from sklearn import preprocessing
 le = preprocessing.LabelEncoder()
 le.fit(df.author)
 print(le.classes_)
 df.author=le.transform(df.author)
-print(M.shape)
+print(type(M))
 print(df.author.shape)
 
-X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(),stratify=df.author.to_numpy(), test_size=0.99, random_state=42) # stratify ???
+X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(),stratify=df.author.to_numpy(), test_size=0.30, random_state=42) # stratify ???
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
