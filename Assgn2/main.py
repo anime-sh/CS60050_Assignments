@@ -62,6 +62,6 @@ def naive_bayes(X_train,y_train, X_test,alpha=1):
     return np.array(Y_pred)
 
 Y_pred = naive_bayes(X_train,y_train,X_test)
-from sklearn.metrics import confusion_matrix, f1_score
+from sklearn.metrics import confusion_matrix, classification_report
 print(confusion_matrix(y_test, Y_pred))
-print(f1_score(y_test, Y_pred))
+print(classification_report(y_test, Y_pred))
