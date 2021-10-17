@@ -18,7 +18,7 @@ print(M.shape)
 print(df.author.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(
-), stratify=df.author.to_numpy(), test_size=0.30, random_state=42)  # stratify ???
+), stratify=df.author.to_numpy(), test_size=0.05, random_state=42)  # stratify ???
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
@@ -101,6 +101,7 @@ class NaiveBayes(object):
                 numerator = np.log(priors[j])+np.log(lolol)
                 denom += priors[j]*lolol
                 local_preds.append(numerator)
+                print(f"lolol={lolol} j={j}\t {priors[j]} ")
             denom = np.log(denom)
             local_preds = np.array(local_preds)-denom  # broadcasting
             pred.append(np.argmax(local_preds))
