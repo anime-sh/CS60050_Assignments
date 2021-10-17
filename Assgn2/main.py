@@ -59,11 +59,20 @@ class NaiveBayes(object):
             self.label_total_word_counts[y_train[i]] += np.sum(self.X_train[i])
         
 
-    def p_doc(self, x, y):
-        # Calculate conditional probability P(word+alpha|label+vocab*alpha) (with smoothening)
-        s=np.sum(self.label_word_counts[y]*x)+self.alpha  #can replace for loop with this
-        s/=(self.label_total_word_counts[y]+self.X_train.shape[1]*self.alpha)
-        return s
+    def log_p_doc(self, x, y):
+        # # Calculate conditional probability P(word+alpha|label+vocab*alpha) (with smoothening)
+        # s=np.sum(self.label_word_counts[y]*x)+self.alpha  #can replace for loop with this
+        # s/=(self.label_total_word_counts[y]+self.X_train.shape[1]*self.alpha)
+
+        num=np.log(self.label_word_counts[y]+self.alpha) # broadcasting
+        print(num.shape)
+        denom=np.log(self.label_total_word_counts[y]+self.X_train.shape[0]*self.alpha)
+        print(denom.shape)
+        num=num-denom # broadcasting
+        print(num.shape)
+        log_prob=np.sum(x*num)
+        print(log_prob.shape)
+        return log_prob
 
     def prior(self, y):
         return self.label_total_text_counts[y]/self.X_train.shape[0]
@@ -82,9 +91,9 @@ class NaiveBayes(object):
             denom = 0
             local_preds = []
             for j in range(self.n_classes):
-                lolol = self.p_doc(x, j)
-                numerator = np.log(priors[j])+np.log(lolol)
-                denom += priors[j]*lolol
+                lolol = self.log_p_doc(x, j)
+                numerator = np.log(priors[j])+lolol
+                denom += priors[j]*np.exp(lolol)
                 local_preds.append(numerator)
             denom = np.log(denom)
             local_preds = np.array(local_preds)-denom  # broadcasting
