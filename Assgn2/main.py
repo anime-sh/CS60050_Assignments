@@ -52,11 +52,11 @@ class NaiveBayes(object):
         
         for j in range(self.n_classes):
             self.label_word_counts[j] = np.zeros(self.X_train.shape[1])
-
-        for x in self.X_train:
+        
+        for i in range(self.X_train.shape[0]):
             self.label_total_text_counts[y_train[i]] += 1
-            self.label_word_counts[y_train[i]] += x
-            self.label_total_word_counts[y_train[i]] += np.sum(x)
+            self.label_word_counts[y_train[i]] += self.X_train[i]
+            self.label_total_word_counts[y_train[i]] += np.sum(self.X_train[i])
         
 
     def p_doc(self, x, y):
