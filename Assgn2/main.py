@@ -100,4 +100,5 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 nb.fit(X_train,y_train)
 Y_pred,y_probs=nb.predict(X_test)
+print(confusion_matrix(y_test,Y_pred))
 print(classification_report(y_test,Y_pred))
