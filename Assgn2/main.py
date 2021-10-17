@@ -18,7 +18,7 @@ print(M.shape)
 print(df.author.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(
-), stratify=df.author.to_numpy(), test_size=0.05, random_state=42)  # stratify ???
+), stratify=df.author.to_numpy(), test_size=0.30, random_state=42)  # stratify ???
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
@@ -69,7 +69,7 @@ class NaiveBayes(object):
         #     if x[index]:
         #         s += ((self.label_word_counts[y][index]+self.alpha))
 
-        print(np.sum(self.label_word_counts[y]*x),np.sum(x))
+        
         s=np.sum(self.label_word_counts[y]*x)+np.sum(x)*self.alpha  #can replace for loop with this
         s/=(self.label_total_word_counts[y]+self.X_train.shape[1]*self.alpha)
         return s
