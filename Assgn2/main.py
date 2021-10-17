@@ -49,37 +49,23 @@ class NaiveBayes(object):
         # Count how many words per label, the frequency of the word for a label
         self.Y_train = y_train
         self.X_train = X_train
-        i = 0
-
+        
         for j in range(self.n_classes):
             self.label_word_counts[j] = np.zeros(self.X_train.shape[1])
 
         for x in self.X_train:
             self.label_total_text_counts[y_train[i]] += 1
-            # self.label_word_counts[y_train[i]] = np.sum([self.label_word_counts[y_train[i]],x])
             self.label_word_counts[y_train[i]] += x
             self.label_total_word_counts[y_train[i]] += np.sum(x)
-            i += 1
+        
 
     def p_doc(self, x, y):
-         # s = 0
         # Calculate conditional probability P(word+alpha|label+vocab*alpha) (with smoothening)
-        # Multiplying frequency here
-        # for index in range(len(x)):
-        #     if x[index]:
-        #         s += ((self.label_word_counts[y][index]+self.alpha))
-
-        
-        s=np.sum(self.label_word_counts[y]*x)+np.sum(x)*self.alpha  #can replace for loop with this
+        s=np.sum(self.label_word_counts[y]*x)+self.alpha  #can replace for loop with this
         s/=(self.label_total_word_counts[y]+self.X_train.shape[1]*self.alpha)
         return s
 
     def prior(self, y):
-        # Calculate probability of the label
-        # total = 0
-        # for l in self.label_total_text_counts:
-        #     total+=self.label_total_text_counts[l]
-        # return self.label_total_text_counts[y]/total
         return self.label_total_text_counts[y]/self.X_train.shape[0]
 
     def predict(self, X_test):
@@ -100,7 +86,6 @@ class NaiveBayes(object):
                 numerator = np.log(priors[j])+np.log(lolol)
                 denom += priors[j]*lolol
                 local_preds.append(numerator)
-                # print(f"lolol={lolol} j={j}\t {priors[j]} ")
             denom = np.log(denom)
             local_preds = np.array(local_preds)-denom  # broadcasting
             pred.append(np.argmax(local_preds))
