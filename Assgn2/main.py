@@ -18,7 +18,7 @@ print(M.shape)
 print(df.author.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(
-), stratify=df.author.to_numpy(), test_size=0.99, random_state=42)  # stratify ???
+), stratify=df.author.to_numpy(), test_size=0.30, random_state=42)  # stratify ???
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
@@ -115,5 +115,4 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 nb.fit(X_train,y_train)
 Y_pred,y_probs=nb.predict(X_test)
-print(confusion_matrix(y_test,Y_pred))
-p
+print(classification_report(y_test,Y_pred))
