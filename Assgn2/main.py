@@ -65,13 +65,9 @@ class NaiveBayes(object):
         # s/=(self.label_total_word_counts[y]+self.X_train.shape[1]*self.alpha)
 
         num=np.log(self.label_word_counts[y]+self.alpha) # broadcasting
-        print(num.shape)
         denom=np.log(self.label_total_word_counts[y]+self.X_train.shape[0]*self.alpha)
-        print(denom.shape)
         num=num-denom # broadcasting
-        print(num.shape)
         log_prob=np.sum(x*num)
-        print(log_prob.shape)
         return log_prob
 
     def prior(self, y):
