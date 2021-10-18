@@ -61,6 +61,8 @@ def run_experiment(X_train,X_test,y_train,y_test,le,alpha=1):
 
 
 if __name__ == "__main__":
+    np.seterr(all="ignore")
+
     df = read_data()
     M = get_M_matrix()
     le = preprocessing.LabelEncoder()
