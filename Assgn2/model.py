@@ -2,13 +2,6 @@ import numpy as np
 import random
 from tqdm import tqdm
 
-def safe_log(x):
-    """If x > 0 return log(x) else return a very large negative number"""
-    if x > 0:
-        return np.log(x)
-    else:
-        return -10000000
-
 class NaiveBayes(object):
     def __init__(self, alpha=1, n_classes=3):
         """
@@ -21,7 +14,6 @@ class NaiveBayes(object):
         self.label_total_text_counts = {}
         self.label_total_word_counts = {}
         self.label_word_counts = {}
-        self.vectorized_safe_log = np.vectorize(safe_log)
         for i in range(n_classes):
             self.label_total_text_counts[i] = 0.0
             self.label_total_word_counts[i] = 0.0
@@ -48,10 +40,11 @@ class NaiveBayes(object):
 
         # x acts a mask, it is a vector of 0s and 1s, x represents the document
         # broadcasting   num is of size vocab
-        num = self.vectorized_safe_log(self.label_word_counts[y]+self.alpha)
+        num = np.log(self.label_word_counts[y]+self.alpha)
+        num = np.where(np.isneginf(num), -1000000, num) # replace neginf with large negative value
         # denom is a scalar
-        denom = np.log(
-            self.label_total_word_counts[y]+self.X_train.shape[0]*self.alpha)
+        denom = np.log(self.label_total_word_counts[y]+self.X_train.shape[0]*self.alpha)
+        denom = np.where(np.isneginf(denom), -1000000, denom) # replace neginf with large negative value
         num = num-denom  # broadcasting
         log_prob = np.sum(x*num)  # masked sum
         return log_prob
@@ -81,10 +74,10 @@ class NaiveBayes(object):
                 numerator = np.log(priors[j])+lolol
                 denom += priors[j]*np.exp(lolol)
                 local_preds.append(numerator)
-            denom = self.vectorized_safe_log(denom+self.alpha)
+            denom = np.log(denom+self.alpha)
+            denom = np.where(np.isneginf(denom), -1000000, denom) # replace neginf with large negative value
             local_preds = np.array(local_preds)-denom  # broadcasting
             pred.append(np.argmax(local_preds))
             probs.append(np.exp(local_preds))
 
         return pred, probs
-
