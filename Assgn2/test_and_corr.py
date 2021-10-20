@@ -52,3 +52,5 @@ sns.heatmap(corr,
         xticklabels=corr.columns,
         yticklabels=corr.columns)
 plt.show()
+corr.sort_values(by=['y'],inplace=True)
+print(corr['y'])
