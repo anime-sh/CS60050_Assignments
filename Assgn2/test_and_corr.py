@@ -43,8 +43,10 @@ print(feature_count)
 ind = np.argpartition(feature_count, -20)[-20:]
 # print(ind,feature_count[ind])
 X_test_reduced=X_test[:,ind]
-print(X_test_reduced.shape)
+# print(X_test_reduced.shape)
 
 df=pd.DataFrame(X_test_reduced)
 df['y']=y_test
-df.corr()
+import seaborn as sns
+
+sns.heatmap(df.corr())
