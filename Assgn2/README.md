@@ -13,3 +13,5 @@
 3. sklearn (for train test split)
 4. nltk (stopwords)
 5. tqdm (progress monitoring)
+
+Note: The test.csv and sample_submission.csv files are not being used and can be deleted.
