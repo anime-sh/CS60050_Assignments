@@ -46,5 +46,5 @@ X_test_reduced=X_test[:,ind]
 print(X_test_reduced.shape)
 
 df=pd.DataFrame(X_test_reduced)
-df['y']=y_test[ind]
+df['y']=y_test
 df.corr()
