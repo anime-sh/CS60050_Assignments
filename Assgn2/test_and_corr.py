@@ -18,7 +18,7 @@ df.author=le.transform(df.author)
 print(type(M))
 print(df.author.shape)
 
-X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(),stratify=df.author.to_numpy(), test_size=0.30, random_state=42) # stratify ???
+X_train, X_test, y_train, y_test = train_test_split(M, df.author.to_numpy(),stratify=df.author.to_numpy(), test_size=0.1, random_state=42) # stratify ???
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
@@ -37,12 +37,14 @@ print(y_test.shape)
 
 
 feature_count=np.zeros_like(M[0])
-for x in M:
+for x in X_test:
     feature_count+=x
 print(feature_count)
 ind = np.argpartition(feature_count, -20)[-20:]
 # print(ind,feature_count[ind])
-M_reduced=M[:,ind]
-print(M_reduced.shape)
-corr=np.corrcoef(M_reduced)
-print(corr)
+X_test_reduced=X_test[:,ind]
+print(X_test_reduced.shape)
+
+df=pd.DataFrame(X_test_reduced)
+df['y']=y_test[ind]
+df.corr()
