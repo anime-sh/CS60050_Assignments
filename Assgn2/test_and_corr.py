@@ -48,5 +48,7 @@ X_test_reduced=X_test[:,ind]
 df=pd.DataFrame(X_test_reduced)
 df['y']=y_test
 import seaborn as sns
-
-sns.heatmap(df.corr())
+corr=df.corr()
+sns.heatmap(corr, 
+        xticklabels=corr.columns,
+        yticklabels=corr.columns)
