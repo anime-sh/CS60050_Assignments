@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 df=pd.read_csv("train.csv")
 vec=CountVectorizer(stop_words='english',binary=True) 
-M=vec.fit_transform(df['text'].to_numpy())
+M=vec.fit_transform(df['text'].to_numpy()).toarray()
 from sklearn import preprocessing
 le = preprocessing.LabelEncoder()
 le.fit(df.author)
@@ -24,13 +24,25 @@ print(X_test.shape)
 print(y_train.shape)
 print(y_test.shape)
 
+# Base 
+# from sklearn.naive_bayes import MultinomialNB
+# from sklearn.metrics import confusion_matrix
+# from sklearn.metrics import classification_report
 
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import classification_report
+# clf = MultinomialNB()
+# clf.fit(X_train, y_train)
+# y_pred = clf.predict(X_test)
+# print(confusion_matrix(y_test, y_pred))
+# print(classification_report(y_test, y_pred))
 
-clf = MultinomialNB()
-clf.fit(X_train, y_train)
-y_pred = clf.predict(X_test)
-print(confusion_matrix(y_test, y_pred))
-print(classification_report(y_test, y_pred))
+
+feature_count=np.zeros_like(M[0])
+for x in M:
+    feature_count+=x
+print(feature_count)
+ind = np.argpartition(feature_count, -20)[-20:]
+# print(ind,feature_count[ind])
+M_reduced=M[:,ind]
+print(M_reduced.shape)
+corr=np.corrcoef(M_reduced)
+print(corr)
