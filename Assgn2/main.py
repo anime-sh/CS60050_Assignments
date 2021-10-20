@@ -6,9 +6,9 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import re
 from nltk.corpus import stopwords
+import nltk
 from model import NaiveBayes
 from math import sqrt
-
 
 def read_data():
     df = pd.read_csv("train.csv")
@@ -16,6 +16,7 @@ def read_data():
 
 
 def get_M_matrix():
+    nltk.download('stopwords')
     stops = set(stopwords.words('english'))
 
     vocab = {}
