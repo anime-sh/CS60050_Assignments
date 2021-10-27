@@ -2,9 +2,14 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.svm import SVC
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import copy
+
 
 def read_data():
     df_list = []
@@ -51,10 +56,75 @@ print(f"y_val shape {y_val.shape}")
 print(f"X_test shape {X_test.shape}")
 print(f"y_test shape {y_test.shape}")
 
-pca = PCA(n_components=2)
-principalComponents = pca.fit_transform(X)
-principaldf = pd.DataFrame(data=principalComponents, columns=[
-                           'pc1', 'pc2'])
-principaldf['y']=y
-sns.scatterplot(data=principaldf,x="pc1",y="pc2",hue="y",cmap='virdis')
-plt.show()
+
+def pca_runs():
+    pca = PCA(n_components=2)
+    pca.fit(X)
+    principalComponents_train = pca.transform(X_train)
+    principaldf = pd.DataFrame(data=principalComponents_train, columns=[
+        'pc1', 'pc2'])
+    principaldf['y'] = y_train
+    sns.scatterplot(data=principaldf, x="pc1", y="pc2", hue="y", cmap='virdis')
+    plt.show()
+
+    pc_X_Train = pca.transform(X_train)
+    pc_X_Val = pca.transform(X_val)
+    pc_X_Test = pca.transform(X_test)
+    best_model = None
+    best_Acc = 0
+    for _ in range(2):
+        model = SVC(gamma='auto')
+        model.fit(pc_X_Train, y_train)
+        y_val_pred = model.predict(pc_X_Val)
+        acc = accuracy_score(y_val, y_val_pred)
+        print(f"Accuracy score for model params is {acc}")
+        if acc > best_Acc:
+            best_Acc = acc
+            best_model = copy.deepcopy(model)
+
+    y_test_pred = best_model.predict(pc_X_Test)
+    print(f"Classification Report on Test Set for the best model on validation set")
+    print(classification_report(y_test, y_test_pred))
+    cm = confusion_matrix(y_test, y_test_pred)
+    df_cm = pd.DataFrame(cm, range(2), range(2))
+    sns.heatmap(df_cm, annot=True, annot_kws={"size": 15})
+    plt.show()
+
+
+def lda_runs():
+    lda = LinearDiscriminantAnalysis()
+    lda.fit(X_train, y_train)
+    lda_train = lda.transform(X_train)
+    lda_train_df = pd.DataFrame(data=lda_train, columns=['lda'])
+    lda_train_df['y'] = y_train
+    lda_train_df['lol'] = np.zeros_like(y_train)
+    sns.scatterplot(data=lda_train_df, x='lda',
+                    y='lol', hue='y', cmap='viridis')
+    plt.show()
+
+    lda_X_Train = lda.transform(X_train)
+    lda_X_Val = lda.transform(X_val)
+    lda_X_Test = lda.transform(X_test)
+    best_model = None
+    best_Acc = 0
+    for _ in range(2):
+        model = SVC(gamma='auto')
+        model.fit(lda_X_Train, y_train)
+        y_val_pred = model.predict(lda_X_Val)
+        acc = accuracy_score(y_val, y_val_pred)
+        print(f"Accuracy score for model params is {acc}")
+        if acc > best_Acc:
+            best_Acc = acc
+            best_model = copy.deepcopy(model)
+
+    y_test_pred = best_model.predict(lda_X_Test)
+    print(f"Classification Report on Test Set for the best model on validation set")
+    print(classification_report(y_test, y_test_pred))
+    cm = confusion_matrix(y_test, y_test_pred)
+    df_cm = pd.DataFrame(cm, range(2), range(2))
+    sns.heatmap(df_cm, annot=True, annot_kws={"size": 15})
+    plt.show()
+
+
+pca_runs()
+lda_runs()
