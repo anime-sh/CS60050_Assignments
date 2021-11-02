@@ -92,7 +92,7 @@ def pca_runs(X_train, X_val, X_test, y_train, y_val, y_test):
             best_params = copy.deepcopy(params)
 
     tuning_df=pd.DataFrame(full_hyperparameter_list)
-    tuning_df['accuracy']=acc_array
+    tuning_df['val_accuracy']=acc_array
     tuning_df.to_csv('pca_results.csv')
     print(tuning_df)
     print(F"Best params on validation set: {best_params}")
@@ -161,7 +161,7 @@ def lda_runs(X_train, X_val, X_test, y_train, y_val, y_test):
             best_params = copy.deepcopy(params)
 
     tuning_df=pd.DataFrame(full_hyperparameter_list)
-    tuning_df['accuracy']=acc_array
+    tuning_df['val_accuracy']=acc_array
     tuning_df.to_csv('lda_results.csv')
     print(tuning_df)
     print(F"Best params on validation set: {best_params}")
