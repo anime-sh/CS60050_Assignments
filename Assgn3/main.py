@@ -42,7 +42,7 @@ def train_val_test_split(X, y, train_size, val_size, shuffle=True, seed=42):
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 
-def     
+def pca_runs(X_train, X_val, X_test, y_train, y_val, y_test):
     pca = PCA(n_components=2)
     pca.fit(X)
     principalComponents_train = pca.transform(X_train)
