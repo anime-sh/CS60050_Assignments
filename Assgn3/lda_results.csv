@@ -1,4 +1,4 @@
-,C,gamma,kernel,class_weight,accuracy
+,C,gamma,kernel,class_weight,val_accuracy
 0,0.01,auto,rbf,balanced,0.9888132295719845
 1,0.01,auto,rbf,,0.9888132295719845
 2,0.01,auto,poly,balanced,0.9878404669260701

@@ -1,0 +1,130 @@
+Final Attributes Index(['Temperature', 'Humidity', 'Light', 'CO2', 'HumidityRatio',
+       'Occupancy'],
+      dtype='object')
+[0 1]
+X_train shape (14391, 5)
+y_train shape (14391,)
+X_val shape (2056, 5)
+y_val shape (2056,)
+X_test shape (4113, 5)
+y_test shape (4113,)
+Run: 0
+Run: 1
+Run: 2
+Run: 3
+Run: 4
+Run: 5
+Run: 6
+Run: 7
+Run: 8
+Run: 9
+Run: 10
+Run: 11
+Run: 12
+Run: 13
+Run: 14
+Run: 15
+Run: 16
+Run: 17
+Run: 18
+Run: 19
+Run: 20
+Run: 21
+Run: 22
+Run: 23
+       C  gamma   kernel class_weight  val_accuracy
+0   0.01   auto      rbf     balanced      0.945039
+1   0.01   auto      rbf         None      0.950875
+2   0.01   auto     poly     balanced      0.926556
+3   0.01   auto     poly         None      0.923638
+4   0.01   auto  sigmoid     balanced      0.814689
+5   0.01   auto  sigmoid         None      0.837062
+6   0.01  scale      rbf     balanced      0.933366
+7   0.01  scale      rbf         None      0.945525
+8   0.01  scale     poly     balanced      0.923638
+9   0.01  scale     poly         None      0.909533
+10  0.01  scale  sigmoid     balanced      0.841440
+11  0.01  scale  sigmoid         None      0.863327
+12  1.00   auto      rbf     balanced      0.954280
+13  1.00   auto      rbf         None      0.962062
+14  1.00   auto     poly     balanced      0.927043
+15  1.00   auto     poly         None      0.925584
+16  1.00   auto  sigmoid     balanced      0.768482
+17  1.00   auto  sigmoid         None      0.810798
+18  1.00  scale      rbf     balanced      0.953794
+19  1.00  scale      rbf         None      0.956226
+20  1.00  scale     poly     balanced      0.927043
+21  1.00  scale     poly         None      0.925584
+22  1.00  scale  sigmoid     balanced      0.808852
+23  1.00  scale  sigmoid         None      0.834144
+Best params on validation set: {'C': 1, 'gamma': 'auto', 'kernel': 'rbf', 'class_weight': None}
+Classification Report on Test Set for the best model on validation set
+              precision    recall  f1-score   support
+
+           0       0.98      0.97      0.98      3163
+           1       0.90      0.95      0.92       950
+
+    accuracy                           0.96      4113
+   macro avg       0.94      0.96      0.95      4113
+weighted avg       0.96      0.96      0.96      4113
+
+Run: 0
+Run: 1
+Run: 2
+Run: 3
+Run: 4
+Run: 5
+Run: 6
+Run: 7
+Run: 8
+Run: 9
+Run: 10
+Run: 11
+Run: 12
+Run: 13
+Run: 14
+Run: 15
+Run: 16
+Run: 17
+Run: 18
+Run: 19
+Run: 20
+Run: 21
+Run: 22
+Run: 23
+       C  gamma   kernel class_weight  val_accuracy
+0   0.01   auto      rbf     balanced      0.988813
+1   0.01   auto      rbf         None      0.988813
+2   0.01   auto     poly     balanced      0.987840
+3   0.01   auto     poly         None      0.987354
+4   0.01   auto  sigmoid     balanced      0.959630
+5   0.01   auto  sigmoid         None      0.959630
+6   0.01  scale      rbf     balanced      0.987354
+7   0.01  scale      rbf         None      0.988813
+8   0.01  scale     poly     balanced      0.987840
+9   0.01  scale     poly         None      0.987354
+10  0.01  scale  sigmoid     balanced      0.961089
+11  0.01  scale  sigmoid         None      0.964981
+12  1.00   auto      rbf     balanced      0.988327
+13  1.00   auto      rbf         None      0.988327
+14  1.00   auto     poly     balanced      0.987840
+15  1.00   auto     poly         None      0.987354
+16  1.00   auto  sigmoid     balanced      0.987840
+17  1.00   auto  sigmoid         None      0.987354
+18  1.00  scale      rbf     balanced      0.988813
+19  1.00  scale      rbf         None      0.988813
+20  1.00  scale     poly     balanced      0.987840
+21  1.00  scale     poly         None      0.987354
+22  1.00  scale  sigmoid     balanced      0.957198
+23  1.00  scale  sigmoid         None      0.943580
+Best params on validation set: {'C': 0.01, 'gamma': 'auto', 'kernel': 'rbf', 'class_weight': 'balanced'}
+Classification Report on Test Set for the best model on validation set
+              precision    recall  f1-score   support
+
+           0       1.00      0.98      0.99      3163
+           1       0.95      1.00      0.97       950
+
+    accuracy                           0.99      4113
+   macro avg       0.97      0.99      0.98      4113
+weighted avg       0.99      0.99      0.99      4113
+

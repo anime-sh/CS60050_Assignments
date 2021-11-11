@@ -1,3 +1,4 @@
+from numpy.core.numeric import full
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
@@ -64,20 +65,42 @@ def pca_runs(X_train, X_val, X_test, y_train, y_val, y_test):
             gamma = ['auto','scale'] # Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.
             C = [0.01,1]        # Regularization parameter. The strength of the regularization is inversely proportional to C
             kernel=['rbf','poly','sigmoid'] # the kernel type to be used in the algorithm
-            class_weight = ['balanced',None]       # class_weight[i]*C for SVC. None, C=1, else C is proportional to inverse of class frequencies
+            degree=[2,4]  # degree of poly kernel
     '''
-    parameters= {
-        'C':[0.01,1],
-        'gamma':['auto','scale'],
-        'kernel':['rbf','poly','sigmoid'],
-        'class_weight':['balanced',None]
+    parameters = {
+        'kernel': ['rbf', 'poly', 'sigmoid'],
+        'gamma': ['auto', 'scale'],
+        'class_weight': ['balanced', None],
+        # 'C': [0.01, 1],
+        'degree': [2, 3, 4]
     }
-    keys,values = parameters.keys(), parameters.values()
-    full_hyperparameter_list = [dict(zip(keys,items)) for items in product(*values)]
-    best_params=None
-    run=0
-    acc_array=[]
+    keys, values = parameters.keys(), parameters.values()
+    full_hyperparameter_list = [dict(zip(keys, items))
+                                for items in product(*values)]
+    best_params = None
+    run = 0
+    acc_array = []
+
+    for hyperparameters in full_hyperparameter_list:
+        if hyperparameters['kernel'] != 'poly':
+            hyperparameters['degree'] = 0
+
+    full_hyperparameter_list = [dict(t) for t in {tuple(
+        d.items()) for d in full_hyperparameter_list}]
+    full_hyperparameter_list = sorted(
+        full_hyperparameter_list, key=lambda x: x['degree'])
+    # full_hyperparameter_list = sorted(
+    #     full_hyperparameter_list, key=lambda x: x['C'])
+    full_hyperparameter_list = sorted(
+        full_hyperparameter_list, key=lambda x: x['gamma'])
+    full_hyperparameter_list = sorted(
+        full_hyperparameter_list, key=lambda x: x['kernel'])
+    full_hyperparameter_list.append({'kernel': 'linear'})
+
     for params in full_hyperparameter_list:
+        if params['kernel'] != 'poly':
+            if 'degree' in params:
+                params.pop('degree')
         model = SVC(**params)
         model.fit(pc_X_Train, y_train)
         y_val_pred = model.predict(pc_X_Val)
@@ -85,14 +108,14 @@ def pca_runs(X_train, X_val, X_test, y_train, y_val, y_test):
         # print(f"Run: {run} \t Model Params: {params}\t Accuracy: {acc}")
         print(f"Run: {run}")
         acc_array.append(acc)
-        run+=1
+        run += 1
         if acc > best_Acc:
             best_Acc = acc
             best_model = copy.deepcopy(model)
             best_params = copy.deepcopy(params)
 
-    tuning_df=pd.DataFrame(full_hyperparameter_list)
-    tuning_df['val_accuracy']=acc_array
+    tuning_df = pd.DataFrame(full_hyperparameter_list)
+    tuning_df['val_accuracy'] = acc_array
     tuning_df.to_csv('pca_results.csv')
     print(tuning_df)
     print(F"Best params on validation set: {best_params}")
@@ -126,27 +149,47 @@ def lda_runs(X_train, X_val, X_test, y_train, y_val, y_test):
     lda_X_Test = lda.transform(X_test)
     best_model = None
     best_Acc = 0
-    
+
     '''
        Hyperparameter tuning for SVM
        Used:
             gamma = ['auto','scale'] # Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’.
             C = [0.01,1]        # Regularization parameter. The strength of the regularization is inversely proportional to C
             kernel=['rbf','poly','sigmoid'] # the kernel type to be used in the algorithm
-            class_weight = ['balanced',None]       # class_weight[i]*C for SVC. None, C=1, else C is proportional to inverse of class frequencies
+            degree=[2,4]  # degree of poly kernel
     '''
-    parameters= {
-        'C':[0.01,1],
-        'gamma':['auto','scale'],
-        'kernel':['rbf','poly','sigmoid'],
-        'class_weight':['balanced',None]
+    parameters = {
+        'kernel': ['rbf', 'poly', 'sigmoid'],
+        'gamma': ['auto', 'scale'],
+        'class_weight': ['balanced', None],
+        # 'C': [0.01, 1],
+        'degree': [2, 3]
     }
-    keys,values = parameters.keys(), parameters.values()
-    full_hyperparameter_list = [dict(zip(keys,items)) for items in product(*values)]
-    best_params=None
-    run=0
-    acc_array=[]
+    keys, values = parameters.keys(), parameters.values()
+    full_hyperparameter_list = [dict(zip(keys, items))
+                                for items in product(*values)]
+    best_params = None
+    run = 0
+    acc_array = []
+
+    for hyperparameters in full_hyperparameter_list:
+        if hyperparameters['kernel'] != 'poly':
+            hyperparameters['degree'] = 0
+
+    full_hyperparameter_list = [dict(t) for t in {tuple(
+        d.items()) for d in full_hyperparameter_list}]
+    full_hyperparameter_list = sorted(
+        full_hyperparameter_list, key=lambda x: x['degree'])
+    full_hyperparameter_list = sorted(
+        full_hyperparameter_list, key=lambda x: x['gamma'])
+    full_hyperparameter_list = sorted(
+        full_hyperparameter_list, key=lambda x: x['kernel'])
+    full_hyperparameter_list.append({'kernel': 'linear'})
+
     for params in full_hyperparameter_list:
+        if params['kernel'] != 'poly':
+            if 'degree' in params:
+                params.pop('degree')
         model = SVC(**params)
         model.fit(lda_X_Train, y_train)
         y_val_pred = model.predict(lda_X_Val)
@@ -154,18 +197,18 @@ def lda_runs(X_train, X_val, X_test, y_train, y_val, y_test):
         # print(f"Run: {run} \t Model Params: {params}\t Accuracy: {acc}")
         print(f"Run: {run}")
         acc_array.append(acc)
-        run+=1
+        run += 1
         if acc > best_Acc:
             best_Acc = acc
             best_model = copy.deepcopy(model)
             best_params = copy.deepcopy(params)
 
-    tuning_df=pd.DataFrame(full_hyperparameter_list)
-    tuning_df['val_accuracy']=acc_array
+    tuning_df = pd.DataFrame(full_hyperparameter_list)
+    tuning_df['val_accuracy'] = acc_array
     tuning_df.to_csv('lda_results.csv')
     print(tuning_df)
     print(F"Best params on validation set: {best_params}")
-    
+
     y_test_pred = best_model.predict(lda_X_Test)
     print(f"Classification Report on Test Set for the best model on validation set")
     print(classification_report(y_test, y_test_pred))
