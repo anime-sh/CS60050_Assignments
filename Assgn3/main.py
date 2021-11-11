@@ -42,7 +42,7 @@ def train_val_test_split(X, y, train_size, val_size, shuffle=True, seed=42):
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 
-def pca_runs(X_train, X_val, X_test, y_train, y_val, y_test):
+def     
     pca = PCA(n_components=2)
     pca.fit(X)
     principalComponents_train = pca.transform(X_train)
@@ -127,9 +127,7 @@ def pca_runs(X_train, X_val, X_test, y_train, y_val, y_test):
     sns.heatmap(df_cm, annot=True, annot_kws={"size": 15}, fmt='g')
     plt.title('PCA: Confusion Matrix (Test Set)')
     plt.show()
-    # sns.heatmap(tuning_df.corr(), annot=True, fmt='g')
-    # plt.title('PCA: Hyperparameter Correlation Heatmap')
-    # plt.show()
+
 
 
 def lda_runs(X_train, X_val, X_test, y_train, y_val, y_test):
@@ -217,9 +215,7 @@ def lda_runs(X_train, X_val, X_test, y_train, y_val, y_test):
     sns.heatmap(df_cm, annot=True, annot_kws={"size": 15}, fmt='g')
     plt.title('LDA: Confusion Matrix (Test Set)')
     plt.show()
-    # sns.heatmap(tuning_df.corr(), annot=True, fmt='g')
-    # plt.title('LDA: Hyperparamter Correlation Matrix')
-    # plt.show()
+
 
 
 if __name__ == "__main__":
